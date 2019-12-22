@@ -76,10 +76,10 @@ header("Access-Control-Allow-Origin: *");
     <body class="text-center" cz-shortcut-listen="true">
         <!--<a href="cadastro.php" style="float: left; position: absolute; top: 15px; right: 15px; opacity: 0.4;"><button type="button" class="btn btn-secondary btn-sm">Criar Conta</button></a>;-->
         <form class="form-signin">
-            <img class="mb-4" src="img/MCGE.png" alt="" width="200" height="200">
+            <img class="mb-4" src="img/MCGE.png" alt="" width="190" height="190">
             <h1 class="h3 mb-3 font-weight-normal" style="cursor: default;">Acesso</h1>
             <label for="inputEmail" class="sr-only">Endereço de email</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Identificador" autocomplete="off" required="" autofocus="">
+            <input type="email" id="inputEmail" class="form-control" placeholder="Id" autocomplete="off" required="" autofocus="">
             <label for="inputPassword" class="sr-only">Senha</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Senha" autocomplete="off" required="">
             <div class="checkbox mb-3">
