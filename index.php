@@ -13,7 +13,7 @@ header("Access-Control-Allow-Origin: *");
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <title>CombustON - Login</title>
+        <title>MC Gaviões da Estrada - Login</title>
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="img/favicon.ico" />
@@ -23,12 +23,45 @@ header("Access-Control-Allow-Origin: *");
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
-
+            
             window.onkeypress = function (e) {
                 if (e['keyCode'] == 13) {
                     login();
                 }
             }
+            
+            function toggleFullScreen() {
+  if (!document.fullscreenElement &&    // alternative standard method
+      !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+            
+            try {
+  toggleFullScreen();
+}
+catch (e) {
+   // declarações para manipular quaisquer exceções
+   console.log(e); // passa o objeto de exceção para o manipulador de erro
+}
 
             function login() {
                 var info = {
@@ -76,7 +109,11 @@ header("Access-Control-Allow-Origin: *");
     <body class="text-center" cz-shortcut-listen="true">
         <!--<a href="cadastro.php" style="float: left; position: absolute; top: 15px; right: 15px; opacity: 0.4;"><button type="button" class="btn btn-secondary btn-sm">Criar Conta</button></a>;-->
         <form class="form-signin">
+<<<<<<< HEAD
             <img class="mb-4" src="img/MCGE.png" alt="" width="190" height="190">
+=======
+            <img class="mb-4" src="https://i.imgur.com/NLGDy4j.png" alt="" width="200" height="200">
+>>>>>>> 9823a4d95a92e59172516afc529010fbedc64f54
             <h1 class="h3 mb-3 font-weight-normal" style="cursor: default;">Acesso</h1>
             <label for="inputEmail" class="sr-only">Endereço de email</label>
             <input type="email" id="inputEmail" class="form-control" placeholder="Id" autocomplete="off" required="" autofocus="">
