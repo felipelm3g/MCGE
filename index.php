@@ -66,8 +66,8 @@ header("Access-Control-Allow-Origin: *");
 
             function login() {
                 var info = {
-                    'email': document.getElementById('inputEmail').value,
-                    'senha': document.getElementById('inputPassword').value,
+                    'cpf': document.getElementById('inputEmail').value,
+                    'pass': document.getElementById('inputPassword').value,
                 };
 
                 var ajax1 = $.ajax({
@@ -110,11 +110,8 @@ header("Access-Control-Allow-Origin: *");
     <body class="text-center" cz-shortcut-listen="true">
         <!--<a href="cadastro.php" style="float: left; position: absolute; top: 15px; right: 15px; opacity: 0.4;"><button type="button" class="btn btn-secondary btn-sm">Criar Conta</button></a>;-->
         <form class="form-signin">
-            <<<<<<< HEAD
-            <img class="mb-4" src="img/MCGE.png" alt="" width="190" height="190">
-            =======
-            <img class="mb-4" src="https://i.imgur.com/NLGDy4j.png" alt="" width="200" height="200">
-            >>>>>>> 9823a4d95a92e59172516afc529010fbedc64f54
+            <!--<img class="mb-4" src="img/MCGE.png" alt="" width="190" height="190">-->
+            <img class="mb-4" src="https://i.imgur.com/NLGDy4j.png" alt="" width="190" height="190">
             <h1 class="h3 mb-3 font-weight-normal" style="cursor: default;">Acesso</h1>
             <label for="inputEmail" class="sr-only">Endereço de email</label>
             <input type="email" id="inputEmail" class="form-control" placeholder="Id" autocomplete="off" required="" autofocus="">
