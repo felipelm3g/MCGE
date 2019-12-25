@@ -71,7 +71,7 @@ header("Access-Control-Allow-Origin: *");
                 };
 
                 var ajax1 = $.ajax({
-                    url: "sys/forms/login.php",
+                    url: "sys/form/form_login.php",
                     type: 'POST',
                     data: info,
                     beforeSend: function () {
@@ -81,14 +81,14 @@ header("Access-Control-Allow-Origin: *");
                         .done(function (data) {
                             if (data == 0 || data == '0') {
                                 console.log("Login validado com sucesso.");
-                                window.location.href = "map.php";
+                                window.location.href = "main.php";
                                 return;
                             } else {
                                 switch (parseInt(data)) {
                                     case 1:
                                         document.getElementById("texto").innerHTML = "E-mail não cadastrado ou inválido.";
                                         $('#exampleModal').modal();
-                                        console.log("E-mail não cadastrado ou inválido.");
+                                        console.log("CPF não cadastrado ou inválido.");
                                         break;
 
                                     case 2:
