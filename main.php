@@ -49,11 +49,20 @@ if (!isset($_SESSION['user'])) {
         </script>
     </head>
     <body>
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Aviso!</h4>
+            <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
+            <hr>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <header style="float: left;width: 100%;position: relative;">
-<!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME']; ?></a>
-                <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
-            </nav>-->
+            <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];     ?></a>
+                            <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
+                        </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
                 <a class="navbar-brand" href="#"><?php echo $_SESSION['user']['USER_NOME']; ?></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

@@ -86,7 +86,7 @@ header("Access-Control-Allow-Origin: *");
                             } else {
                                 switch (parseInt(data)) {
                                     case 1:
-                                        document.getElementById("texto").innerHTML = "E-mail não cadastrado ou inválido.";
+                                        document.getElementById("texto").innerHTML = "CPF não cadastrado ou inválido.";
                                         $('#exampleModal').modal();
                                         console.log("CPF não cadastrado ou inválido.");
                                         break;
