@@ -4,6 +4,11 @@ if (!isset($_SESSION['user'])) {
     session_destroy();
     header('Location: index.php');
     exit;
+} else {
+    if ($_SESSION['user']['USER_TYP'] != 2) {
+        header('Location: index.php');
+        exit;
+    }
 }
 ?>
 <!doctype html>
@@ -51,7 +56,7 @@ if (!isset($_SESSION['user'])) {
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];      ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];        ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -63,16 +68,16 @@ if (!isset($_SESSION['user'])) {
                     <div class="navbar-nav">
                         <?php
                         switch ($_SESSION['user']['USER_TYP']) {
-                            case 1:
+                            case 0:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 break;
-                            
-                            case 2:
+
+                            case 1:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
                                 break;
-                            
-                            case 0:
+
+                            case 2:
                                 echo "<a class='nav-item nav-link' href='administracao.php'><ion-icon name='podium'></ion-icon> Administração</a>";
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
@@ -86,7 +91,12 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            
+            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-primary btn-lg">Agenda</button>
+            <!--<button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-secondary btn-lg">-</button>-->
+            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-success btn-lg">Membros</button>
+            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-danger btn-lg">Financeiro</button>
+            <!--<button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-warning btn-lg">-</button>-->
+            <!--<button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-info btn-lg">-</button>-->
         </main>
 
         <!-- Modal -->

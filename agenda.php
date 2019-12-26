@@ -63,16 +63,16 @@ if (!isset($_SESSION['user'])) {
                     <div class="navbar-nav">
                         <?php
                         switch ($_SESSION['user']['USER_TYP']) {
-                            case 1:
+                            case 0:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 break;
                             
-                            case 2:
+                            case 1:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
                                 break;
                             
-                            case 0:
+                            case 2:
                                 echo "<a class='nav-item nav-link' href='administracao.php'><ion-icon name='podium'></ion-icon> Administração</a>";
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";

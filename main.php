@@ -67,16 +67,16 @@ if (!isset($_SESSION['user'])) {
                     <div class="navbar-nav">
                         <?php
                         switch ($_SESSION['user']['USER_TYP']) {
-                            case 1:
+                            case 0:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 break;
 
-                            case 2:
+                            case 1:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
                                 break;
 
-                            case 0:
+                            case 2:
                                 echo "<a class='nav-item nav-link' href='administracao.php'><ion-icon name='podium'></ion-icon> Administração</a>";
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
@@ -99,10 +99,18 @@ if (!isset($_SESSION['user'])) {
             </div>
 
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading">Encontro</h4>
-                <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
+                <h4 class="alert-heading">Evento</h4>
+                <p>24º encontro de motociclistas no shopping Iguatemi.</p>
                 <hr>
-                <button type="button" onclick="OpenMapa('-4.0055176','-38.3292185');" class="btn btn-success btn-sm">Abrir Mapa</button>
+                <button type="button" onclick="OpenMapa('-3.7544661','-38.5393512');" class="btn btn-success btn-sm">Abrir Mapa</button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <h4 class="alert-heading">Informação</h4>
+                <p>Nosso aplicativo está em fase de teste. Dúvidas ou Bugs, por favor reportar para diretoria.</p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
                     <span aria-hidden="true">&times;</span>
                 </button>
