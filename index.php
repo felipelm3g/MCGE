@@ -1,5 +1,9 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+session_start();
+if (isset($_SESSION['user'])) {
+    header('Location: main.php');
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="pt-BR">

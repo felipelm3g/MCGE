@@ -43,7 +43,7 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("exampleModalLabel").innerHTML = "Tem certeza?";
                 document.getElementById("texto").innerHTML = "Depois de deslogar não será mais possível acessar o sistema, a menos que se logue novamente.";
                 document.getElementById("writebtn").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Não</button>";
-                document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/forms/deslogar.php\";' class='btn btn-primary'>Sim</button>";
+                document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
         </script>
@@ -53,14 +53,13 @@ if (!isset($_SESSION['user'])) {
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">Aviso!</h4>
             <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
-            <hr>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];     ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];      ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -70,9 +69,26 @@ if (!isset($_SESSION['user'])) {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="#"><ion-icon name="calendar"></ion-icon> Agenda</a>
-                        <a class="nav-item nav-link" href="#"><ion-icon name="logo-usd"></ion-icon> Mensalidades</a>
-                        <a class="nav-item nav-link" href="#"><ion-icon name="power"></ion-icon> Sair</a>
+                        <?php
+                        switch ($_SESSION['user']['USER_TYP']) {
+                            case 1:
+                                echo "<a class='nav-item nav-link' href='#'><ion-icon name='calendar'></ion-icon> Agenda</a>";
+                                break;
+                            
+                            case 2:
+                                echo "<a class='nav-item nav-link' href='#'><ion-icon name='calendar'></ion-icon> Agenda</a>";
+                                echo "<a class='nav-item nav-link' href='#'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
+                                break;
+                            
+                            case 0:
+                                echo "<a class='nav-item nav-link' href='#'><ion-icon name='podium'></ion-icon> Administração</a>";
+                                echo "<a class='nav-item nav-link' href='#'><ion-icon name='calendar'></ion-icon> Agenda</a>";
+                                echo "<a class='nav-item nav-link' href='#'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
+                                break;
+                        }
+                        ?>
+                        
+                        <a class='nav-item nav-link' href='#' onclick="Logout();"><ion-icon name='power'></ion-icon> Sair</a>
                     </div>
                 </div>
             </nav>
