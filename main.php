@@ -46,24 +46,20 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
+            function OpenMapa(lat,log){
+                var linkmap = "https://www.google.com/maps/search/?api=1&query=" + lat + "," + log;
+                window.open(linkmap,"_blank");
+            }
         </script>
     </head>
     <body>
-
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Aviso!</h4>
-            <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];      ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];          ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
-                <a class="navbar-brand" href="#"><?php echo $_SESSION['user']['USER_NOME']; ?></a>
+                <a class="navbar-brand" href="main.php"><?php echo $_SESSION['user']['USER_NOME']; ?></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -74,12 +70,12 @@ if (!isset($_SESSION['user'])) {
                             case 1:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 break;
-                            
+
                             case 2:
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
                                 echo "<a class='nav-item nav-link' href='mensalidades.php'><ion-icon name='logo-usd'></ion-icon> Mensalidades</a>";
                                 break;
-                            
+
                             case 0:
                                 echo "<a class='nav-item nav-link' href='administracao.php'><ion-icon name='podium'></ion-icon> Administração</a>";
                                 echo "<a class='nav-item nav-link' href='agenda.php'><ion-icon name='calendar'></ion-icon> Agenda</a>";
@@ -94,7 +90,23 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <h4 class="alert-heading">Aviso!</h4>
+                <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <h4 class="alert-heading">Encontro</h4>
+                <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
+                <hr>
+                <button type="button" onclick="OpenMapa('-4.0055176','-38.3292185');" class="btn btn-success btn-sm">Abrir Mapa</button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </main>
 
         <!-- Modal -->
