@@ -92,7 +92,7 @@ if (!isset($_SESSION['user'])) {
         <main  style="float: left;width: 100%; padding: 20px;">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <h4 class="alert-heading">Aviso!</h4>
-                <p>Sua mensalidade do mês <strong>Jan/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
+                <p>Sua mensalidade do mês <strong>Fev/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
                     <span aria-hidden="true">&times;</span>
                 </button>
