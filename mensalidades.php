@@ -91,7 +91,7 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            <p style="font-size: 0.7em; opacity: 0.5;"><ion-icon name="information-circle-outline"></ion-icon> Clique para obter detalhes.</p>
+            <p style="font-size: 0.8em; opacity: 0.5;"><ion-icon name="information-circle-outline"></ion-icon> Clique para obter detalhes.</p>
             <table class="table">
                 <thead>
                     <tr>
