@@ -91,11 +91,11 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-primary btn-lg">Agenda</button>
+            <button type="button" onclick="window.location.href='admin/agenda.php';" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-primary btn-lg">Agenda</button>
             <!--<button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-secondary btn-lg">-</button>-->
-            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-success btn-lg">Membros</button>
-            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-danger btn-lg">Financeiro</button>
-            <button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-warning btn-lg">Logs</button>
+            <button type="button" onclick="window.location.href='admin/membros.php';" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-success btn-lg">Membros</button>
+            <button type="button" onclick="window.location.href='admin/financeiro.php';" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-danger btn-lg">Financeiro</button>
+            <button type="button" onclick="window.location.href='admin/membros.php';" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-warning btn-lg">Logs</button>
             <!--<button type="button" style="float: left;width: 100%; margin-bottom: 10px;" class="btn btn-info btn-lg">-</button>-->
         </main>
 
