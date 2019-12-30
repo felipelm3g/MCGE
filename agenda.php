@@ -21,7 +21,7 @@ if (!isset($_SESSION['user'])) {
         <title>MC Gaviões da Estrada - Agenda</title>
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="img/favicon.ico" />
+        <link rel="shortcut icon" href="img/MCGDE.png" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>

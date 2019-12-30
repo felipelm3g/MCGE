@@ -26,7 +26,7 @@ if (!isset($_SESSION['user'])) {
         <title>MC Gaviões da Estrada - Mensalidades</title>
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="img/favicon.ico" />
+        <link rel="shortcut icon" href="img/MCGDE.png" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -50,6 +50,12 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Não</button>";
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
+            }
+            
+            function Open(id){
+                console.log(id);
+                document.getElementById("ModalDetalheLabel").innerHTML = "Mensalidade";
+                $('#ModalDetalhe').modal();
             }
         </script>
     </head>
@@ -101,17 +107,17 @@ if (!isset($_SESSION['user'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr onclick="Open(1);">
                         <th scope="row">Jan/2020</th>
                         <td>R$ 25,00</td>
                         <td style="color: #218838;"><ion-icon name="checkmark"></ion-icon></td>
                     </tr>
-                    <tr>
+                    <tr onclick="Open(2);">
                         <th scope="row">Fev/2020</th>
                         <td>R$ 25,00</td>
                         <td style="color: #C82333;"><ion-icon name="alarm"></ion-icon></td>
                     </tr>
-                    <tr>
+                    <tr onclick="Open(3);">
                         <th scope="row">Mar/2020</th>
                         <td>R$ 25,00</td>
                         <td style="color: #E0A800;"><ion-icon name="time"></ion-icon></td>
@@ -120,12 +126,31 @@ if (!isset($_SESSION['user'])) {
             </table>
         </main>
 
-        <!-- Modal -->
+        <!-- Modal Logout -->
         <div class="modal fade" style="" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="texto">teste</p>
+                    </div>
+                    <div class="modal-footer" id="writebtn">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Detalhe -->
+        <div class="modal fade" style="" id="ModalDetalhe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalDetalheLabel">Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

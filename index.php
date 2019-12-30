@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) {
         <title>MC Gaviões da Estrada - Login</title>
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="img/favicon.ico" />
+        <link rel="shortcut icon" href="img/MCGDE.png" />
 
         <!-- Estilos customizados para esse template -->
         <link href="css/signin.css" rel="stylesheet">

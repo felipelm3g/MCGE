@@ -21,7 +21,7 @@ if (!isset($_SESSION['user'])) {
         <title>MC Gaviões da Estrada - Agenda</title>
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="img/favicon.ico" />
+        <link rel="shortcut icon" href="../img/MCGDE.png" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -34,7 +34,7 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("exampleModalLabel").innerHTML = "Tem certeza?";
                 document.getElementById("texto").innerHTML = "Depois de deslogar não será mais possível acessar o sistema, a menos que se logue novamente.";
                 document.getElementById("writebtn").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Não</button>";
-                document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/forms/deslogar.php\";' class='btn btn-primary'>Sim</button>";
+                document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"../sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
 
@@ -45,7 +45,7 @@ if (!isset($_SESSION['user'])) {
     </head>
     <body>
         <header style="float: left;width: 100%;">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #000;">
                 <a class="navbar-brand" onclick="window.history.go(-1);"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="arrow-round-back"></ion-icon></button> &nbsp;Agenda</a>
                 <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
             </nav>
