@@ -41,7 +41,22 @@ if (!isset($_SESSION['user'])) {
                 appearance: textfield;
 
             }
-
+            .mensalidadetable {
+                border: 1px solid #898989;
+                border-collapse: collapse;
+            }
+            .mensalidadetable tr th {
+                border: 1px solid #898989;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
+            }
+            .mensalidadetable tr td {
+                border: 1px solid #898989;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
+            }
         </style>
         <script>
             function Logout() {
@@ -51,8 +66,8 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
-            
-            function Open(id){
+
+            function Open(id) {
                 console.log(id);
                 document.getElementById("ModalDetalheLabel").innerHTML = "Mensalidade";
                 $('#ModalDetalhe').modal();
@@ -62,7 +77,7 @@ if (!isset($_SESSION['user'])) {
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];       ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];         ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -98,72 +113,95 @@ if (!isset($_SESSION['user'])) {
 
         <main  style="float: left;width: 100%; padding: 20px;">
             <p style="font-size: 0.8em; opacity: 0.5;"><ion-icon name="information-circle-outline"></ion-icon> Clique para obter detalhes.</p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Mês</th>
-                        <th scope="col">Valor</th>
-                        <th scope="col">St</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr onclick="Open(1);">
-                        <th scope="row">Jan/2020</th>
-                        <td>R$ 25,00</td>
-                        <td style="color: #218838;"><ion-icon name="checkmark"></ion-icon></td>
-                    </tr>
-                    <tr onclick="Open(2);">
-                        <th scope="row">Fev/2020</th>
-                        <td>R$ 25,00</td>
-                        <td style="color: #C82333;"><ion-icon name="alarm"></ion-icon></td>
-                    </tr>
-                    <tr onclick="Open(3);">
-                        <th scope="row">Mar/2020</th>
-                        <td>R$ 25,00</td>
-                        <td style="color: #E0A800;"><ion-icon name="time"></ion-icon></td>
-                    </tr>
-                </tbody>
-            </table>
-        </main>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Mês</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">St</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr onclick="Open(1);">
+                    <th scope="row">Jan/2020</th>
+                    <td>R$ 5,00</td>
+                    <td style="color: #218838;"><ion-icon name="checkmark"></ion-icon></td>
+            </tr>
+            <tr onclick="Open(2);">
+                <th scope="row">Fev/2020</th>
+                <td>R$ 25,00</td>
+                <td style="color: #C82333;"><ion-icon name="alarm"></ion-icon></td>
+            </tr>
+            <tr onclick="Open(3);">
+                <th scope="row">Mar/2020</th>
+                <td>R$ 25,00</td>
+                <td style="color: #E0A800;"><ion-icon name="time"></ion-icon></td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
 
-        <!-- Modal Logout -->
-        <div class="modal fade" style="" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="texto">teste</p>
-                    </div>
-                    <div class="modal-footer" id="writebtn">
-                    </div>
+    <!-- Modal Logout -->
+    <div class="modal fade" style="" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="texto">teste</p>
+                </div>
+                <div class="modal-footer" id="writebtn">
                 </div>
             </div>
         </div>
-        
-        <!-- Modal Detalhe -->
-        <div class="modal fade" style="" id="ModalDetalhe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalDetalheLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="texto">teste</p>
-                    </div>
-                    <div class="modal-footer" id="writebtn">
-                    </div>
+    </div>
+
+    <!-- Modal Detalhe -->
+    <div class="modal fade" style="" id="ModalDetalhe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalDetalheLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <b><p id="texto">Jan/2020 <font style="color: #218838;"><ion-icon name="checkmark"></ion-icon></font>&nbsp;&nbsp;<font style="font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);">Dt pgmt. 04/01/2020</font></p></b>
+                    <table class="mensalidadetable">
+                        <tr>
+                            <td>Vencimento</td>
+                            <td>05/01/2020</td>
+                        </tr>
+                        <tr>
+                            <td>Valor</td>
+                            <td>R$ 25,00</td>
+                        </tr>
+                        <tr>
+                            <td>Desconto</td>
+                            <td>R$ 20,00</td>
+                        </tr>
+                        <tr>
+                            <td>Observação</td>
+                            <td>Devolução do pagamento dos refrigerantes da ação social</td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <th>R$ 5,00</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer" id="writebtn">
+                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>
                 </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body> 
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body> 
 </html>
