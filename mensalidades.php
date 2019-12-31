@@ -59,6 +59,9 @@ if (!isset($_SESSION['user'])) {
             }
         </style>
         <script>
+
+            var mes = ['N/A', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
             function Logout() {
                 document.getElementById("exampleModalLabel").innerHTML = "Tem certeza?";
                 document.getElementById("texto").innerHTML = "Depois de deslogar não será mais possível acessar o sistema, a menos que se logue novamente.";
@@ -68,7 +71,6 @@ if (!isset($_SESSION['user'])) {
             }
 
             function Open(id) {
-                console.log(id);
 
                 var info = {
                     'id': id,
@@ -85,22 +87,33 @@ if (!isset($_SESSION['user'])) {
                 })
                         .done(function (data) {
                             console.log("Busca concluída...");
-                            
+
                             document.getElementById("ModalDetalheLabel").innerHTML = "Mensalidade";
-                            
+
                             var html = "";
+                            var difvlr = parseFloat(data[0]['MENS_VLR']) - parseFloat(data[0]['MENS_DES']);
+                            var txt = "";
+
+                            var date = data[0]['MENS_DATA'].split('-');
+                            txt = mes[date[1]] + "/" + date[0];
                             
-                            html += "<tr><td>Vencimento</td><td>05/01/2020</td></tr>";
-                            html += "<tr><td>Valor</td><td>R$ 25,00</td></tr>";
-                            html += "<tr><td>Desconto</td><td>R$ 20,00</td></tr>";
-                            html += "<tr><td>Observação</td><td>Devolução do pagamento dos refrigerantes da ação social</td></tr>";
-                            html += "<tr><td>Total</td><td>R$ 5,00</td></tr>";
-                            
+                            document.getElementById("textomensal").innerHTML = txt;
+
+                            html += "<tr><td>Vencimento</td><td>" + date[2] + "/" + date[1] + "/" + date[0] + "</td></tr>";
+                            html += "<tr><td>Valor</td><td>R$ " + data[0]['MENS_VLR'] + "</td></tr>";
+                            html += "<tr><td>Desconto</td><td>R$ " + data[0]['MENS_DES'] + "</td></tr>";
+                            if (data[0]['MENS_OBS'] == null) {
+                                html += "<tr><td>Observação</td><td></td></tr>";
+                            } else {
+                                html += "<tr><td>Observação</td><td>" + data[0]['MENS_OBS'] + "</td></tr>";
+                            }
+                            html += "<tr><td>Total</td><td>R$ " + difvlr.toFixed(2) + "</td></tr>";
+
                             document.getElementById('mensaltable').innerHTML = html;
-                            
+
                             document.getElementById("datapagmt").innerHTML = "04/06/2019";
                             $('#ModalDetalhe').modal();
-                            
+
                             return;
                         })
                         .fail(function (jqXHR, textStatus, data) {
@@ -125,10 +138,19 @@ if (!isset($_SESSION['user'])) {
                             console.log("Informações recuperadas com sucesso...")
 //                            console.log(data);
                             var html = "";
+                            var difvlr;
+                            var txt = "";
+
                             for (i = 0; i < data.length; i++) {
+
+                                difvlr = parseFloat(data[i]['MENS_VLR']) - parseFloat(data[i]['MENS_DES']);
+                                var date = data[i]['MENS_DATA'].split('-');
+
+                                txt = mes[date[1]] + "/" + date[0];
+
                                 html += "<tr onclick='Open(" + data[i]['MENS_ID'] + ");'>";
-                                html += "<th scope='row'>Jan/2020</th>";
-                                html += "<td>R$ " + data[i]['MENS_VLR'] + "</td>";
+                                html += "<th scope='row'>" + txt + "</th>";
+                                html += "<td>R$ " + difvlr.toFixed(2) + "</td>";
                                 switch (data[i]['MENS_STT']) {
                                     case "0":
                                         html += "<td style='color: #E0A800;'><ion-icon name='time'></ion-icon></td>";
@@ -160,7 +182,7 @@ if (!isset($_SESSION['user'])) {
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                    ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                      ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -254,9 +276,9 @@ if (!isset($_SESSION['user'])) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <b><p id="texto">Jan/2020 <font style="color: #218838;"><ion-icon name="checkmark"></ion-icon></font></p></b>
+                    <b><p id="textomensal">Mes/0000 <font style="color: #218838;"><ion-icon name="checkmark"></ion-icon></font></p></b>
                     <table class="mensalidadetable" id="mensaltable">
-                        
+
                     </table>
                     <p style="margin-bottom: 1px; margin-top: 10px; font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);">Dt pgmt. <font id="datapagmt"></font></p>
                 </div>
