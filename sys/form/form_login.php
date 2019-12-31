@@ -1,7 +1,7 @@
 <?php
 
 require_once '../class/Database.php';
-date_default_timezone_set('America/Recife');
+date_default_timezone_set('America/Fortaleza');
 
 $cpf = $_POST["cpf"];
 $pass = $_POST["pass"];

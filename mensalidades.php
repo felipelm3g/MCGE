@@ -70,14 +70,59 @@ if (!isset($_SESSION['user'])) {
             function Open(id) {
                 console.log(id);
                 document.getElementById("ModalDetalheLabel").innerHTML = "Mensalidade";
+                document.getElementById("datapagmt").innerHTML = "04/06/2019";
                 $('#ModalDetalhe').modal();
+            }
+
+            function MontarMensalidade() {
+
+                var ajax1 = $.ajax({
+                    url: "sys/return/return_mensalidades.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Recuperando informaçoes de mensalidades...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            var html = "";
+                            for (i = 0; i < data.length; i++) {
+                                html += "<tr onclick='Open(" + data[i]['MENS_ID'] + ");'>";
+                                html += "<th scope='row'>Jan/2020</th>";
+                                html += "<td>R$ " + data[i]['MENS_VLR'] + "</td>";
+                                switch (data[i]['MENS_STT']) {
+                                    case "0":
+                                        html += "<td style='color: #E0A800;'><ion-icon name='time'></ion-icon></td>";
+                                        break;
+                                    case "1":
+                                        html += "<td style='color: #C82333;'><ion-icon name='alarm'></ion-icon></td>";
+                                        break;
+                                    case "2":
+                                        html += "<td style='color: #218838;'><ion-icon name='checkmark'></ion-icon></td>";
+                                        break;
+                                }
+                                html += "</tr>";
+                                document.getElementById('tablemensal').innerHTML += html;
+                                html = "";
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
+            }
+
+            window.onload = function (e) {
+                MontarMensalidade();
             }
         </script>
     </head>
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];         ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                  ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -121,7 +166,7 @@ if (!isset($_SESSION['user'])) {
                     <th scope="col">St</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tablemensal"><!--
                 <tr onclick="Open(1);">
                     <th scope="row">Jan/2020</th>
                     <td>R$ 5,00</td>
@@ -136,7 +181,7 @@ if (!isset($_SESSION['user'])) {
                 <th scope="row">Mar/2020</th>
                 <td>R$ 25,00</td>
                 <td style="color: #E0A800;"><ion-icon name="time"></ion-icon></td>
-            </tr>
+            </tr>-->
             </tbody>
         </table>
     </main>
@@ -171,7 +216,7 @@ if (!isset($_SESSION['user'])) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <b><p id="texto">Jan/2020 <font style="color: #218838;"><ion-icon name="checkmark"></ion-icon></font>&nbsp;&nbsp;<font style="font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);">Dt pgmt. 04/01/2020</font></p></b>
+                    <b><p id="texto">Jan/2020 <font style="color: #218838;"><ion-icon name="checkmark"></ion-icon></font></p></b>
                     <table class="mensalidadetable">
                         <tr>
                             <td>Vencimento</td>
@@ -194,6 +239,7 @@ if (!isset($_SESSION['user'])) {
                             <th>R$ 5,00</th>
                         </tr>
                     </table>
+                    <p style="margin-bottom: 1px; margin-top: 10px; font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);">Dt pgmt. <font id="datapagmt"></font></p>
                 </div>
                 <div class="modal-footer" id="writebtn">
                     <button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>
