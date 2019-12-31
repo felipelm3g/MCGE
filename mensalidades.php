@@ -69,9 +69,46 @@ if (!isset($_SESSION['user'])) {
 
             function Open(id) {
                 console.log(id);
-                document.getElementById("ModalDetalheLabel").innerHTML = "Mensalidade";
-                document.getElementById("datapagmt").innerHTML = "04/06/2019";
-                $('#ModalDetalhe').modal();
+
+                var info = {
+                    'id': id,
+                };
+
+                var ajax2 = $.ajax({
+                    url: "sys/return/return_mensalidade.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando detalhes...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log("Busca concluída...");
+                            
+                            document.getElementById("ModalDetalheLabel").innerHTML = "Mensalidade";
+                            
+                            var html = "";
+                            
+                            html += "<tr><td>Vencimento</td><td>05/01/2020</td></tr>";
+                            html += "<tr><td>Valor</td><td>R$ 25,00</td></tr>";
+                            html += "<tr><td>Desconto</td><td>R$ 20,00</td></tr>";
+                            html += "<tr><td>Observação</td><td>Devolução do pagamento dos refrigerantes da ação social</td></tr>";
+                            html += "<tr><td>Total</td><td>R$ 5,00</td></tr>";
+                            
+                            document.getElementById('mensaltable').innerHTML = html;
+                            
+                            document.getElementById("datapagmt").innerHTML = "04/06/2019";
+                            $('#ModalDetalhe').modal();
+                            
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.error(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
+
+
             }
 
             function MontarMensalidade() {
@@ -85,7 +122,8 @@ if (!isset($_SESSION['user'])) {
                     }
                 })
                         .done(function (data) {
-                            console.log(data);
+                            console.log("Informações recuperadas com sucesso...")
+//                            console.log(data);
                             var html = "";
                             for (i = 0; i < data.length; i++) {
                                 html += "<tr onclick='Open(" + data[i]['MENS_ID'] + ");'>";
@@ -109,7 +147,7 @@ if (!isset($_SESSION['user'])) {
                             return;
                         })
                         .fail(function (jqXHR, textStatus, data) {
-                            console.log(jqXHR + " - " + textStatus + " - " + data);
+                            console.error(jqXHR + " - " + textStatus + " - " + data);
                             return;
                         });
             }
@@ -122,7 +160,7 @@ if (!isset($_SESSION['user'])) {
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                  ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                    ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -217,27 +255,8 @@ if (!isset($_SESSION['user'])) {
                 </div>
                 <div class="modal-body">
                     <b><p id="texto">Jan/2020 <font style="color: #218838;"><ion-icon name="checkmark"></ion-icon></font></p></b>
-                    <table class="mensalidadetable">
-                        <tr>
-                            <td>Vencimento</td>
-                            <td>05/01/2020</td>
-                        </tr>
-                        <tr>
-                            <td>Valor</td>
-                            <td>R$ 25,00</td>
-                        </tr>
-                        <tr>
-                            <td>Desconto</td>
-                            <td>R$ 20,00</td>
-                        </tr>
-                        <tr>
-                            <td>Observação</td>
-                            <td>Devolução do pagamento dos refrigerantes da ação social</td>
-                        </tr>
-                        <tr>
-                            <th>Total</th>
-                            <th>R$ 5,00</th>
-                        </tr>
+                    <table class="mensalidadetable" id="mensaltable">
+                        
                     </table>
                     <p style="margin-bottom: 1px; margin-top: 10px; font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);">Dt pgmt. <font id="datapagmt"></font></p>
                 </div>
