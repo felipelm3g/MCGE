@@ -8,16 +8,39 @@ $conexao = Database::conexao();
 
 $consulta = $conexao->query("SELECT * FROM T_USER WHERE NOT USER_TYP = 0;");
 
+//Nome do arquivo
+$nomearq = "logs/mensalidades/job_mensalidades_" . date("Y-m-d") . ".txt";
+
+//Criamos o arquivo
+$arquivo = fopen($nomearq, 'w');
+
+//Verificamos se foi criado
+if ($arquivo == false) {
+    exit;
+}
+
+$texto = "";
+
 while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
 
     $user = new User($linha['USER_CPF']);
-    echo $user->gerarFatura('25');
-    echo "<br>";
+    
+    if ($user->gerarFatura('25')) {
+        $texto = $texto . $linha['USER_CPF'] . ' - Gerado com sucesso.' . " \r\n";
+    } else {
+        $texto = $texto . $linha['USER_CPF'] . ' - Não foi gerado.' . " \r\n";
+    }
+    
     $user = "";
 }
+
+//Escrevemos no arquivo
+fwrite($arquivo, $texto);
+//Fechamos o arquivo
+fclose($arquivo);
 
 //Desfaz conexão com banco de dados
 $conexao = null;
 
-
-
+exit;
+?>

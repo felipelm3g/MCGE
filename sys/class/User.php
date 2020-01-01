@@ -78,12 +78,12 @@ class User {
                 ':valr' => $vlr
             ));
             
-            return 0;
+            return true;
         } else {
 
             //Desfaz conexão com banco de dados
             $conexao = null;
-            return 1;
+            return false;
         }
     }
 
