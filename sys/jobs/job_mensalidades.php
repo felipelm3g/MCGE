@@ -6,7 +6,7 @@ require_once '../class/Database.php';
 //Cria conexão com banco de dados
 $conexao = Database::conexao();
 
-$consulta = $conexao->query("SELECT * FROM T_USER;");
+$consulta = $conexao->query("SELECT * FROM T_USER WHERE NOT USER_TYP = 0;");
 
 while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
 

@@ -94,24 +94,25 @@ if (!isset($_SESSION['user'])) {
                             var difvlr = parseFloat(data[0]['MENS_VLR']) - parseFloat(data[0]['MENS_DES']);
                             var txt = "";
 
-                            var date = data[0]['MENS_DATA'].split('-');
-                            txt = mes[date[1]] + "/" + date[0];
-                            
+                            var date1 = data[0]['MENS_DATA'].split('-');
+                            txt = mes[parseInt(date1[1])] + "/" + date1[0];
+
                             document.getElementById("textomensal").innerHTML = txt;
 
-                            html += "<tr><td>Vencimento</td><td>" + date[2] + "/" + date[1] + "/" + date[0] + "</td></tr>";
+                            html += "<tr><td>Vencimento</td><td>" + date1[2] + "/" + date1[1] + "/" + date1[0] + "</td></tr>";
                             html += "<tr><td>Valor</td><td>R$ " + data[0]['MENS_VLR'] + "</td></tr>";
                             html += "<tr><td>Desconto</td><td>R$ " + data[0]['MENS_DES'] + "</td></tr>";
-                            if (data[0]['MENS_OBS'] == null) {
-                                html += "<tr><td>Observação</td><td></td></tr>";
-                            } else {
+                            if (data[0]['MENS_OBS'] != null) {
                                 html += "<tr><td>Observação</td><td>" + data[0]['MENS_OBS'] + "</td></tr>";
                             }
                             html += "<tr><td>Total</td><td>R$ " + difvlr.toFixed(2) + "</td></tr>";
 
                             document.getElementById('mensaltable').innerHTML = html;
 
-                            document.getElementById("datapagmt").innerHTML = "04/06/2019";
+                            if (data[0]['MENS_PAGT'] != null) {
+                                var date2 = data[0]['MENS_PAGT'].split('-');
+                                document.getElementById("datapagmt").innerHTML = "Dt pgmt. " + date2[2] + "/" + date2[1] + "/" + date2[0];
+                            }
                             $('#ModalDetalhe').modal();
 
                             return;
@@ -144,9 +145,9 @@ if (!isset($_SESSION['user'])) {
                             for (i = 0; i < data.length; i++) {
 
                                 difvlr = parseFloat(data[i]['MENS_VLR']) - parseFloat(data[i]['MENS_DES']);
-                                var date = data[i]['MENS_DATA'].split('-');
+                                var date1 = data[i]['MENS_DATA'].split('-');
 
-                                txt = mes[date[1]] + "/" + date[0];
+                                txt = mes[parseInt(date1[1])] + "/" + date1[0];
 
                                 html += "<tr onclick='Open(" + data[i]['MENS_ID'] + ");'>";
                                 html += "<th scope='row'>" + txt + "</th>";
@@ -182,7 +183,7 @@ if (!isset($_SESSION['user'])) {
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                      ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                         ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -280,7 +281,7 @@ if (!isset($_SESSION['user'])) {
                     <table class="mensalidadetable" id="mensaltable">
 
                     </table>
-                    <p style="margin-bottom: 1px; margin-top: 10px; font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);">Dt pgmt. <font id="datapagmt"></font></p>
+                    <p id="datapagmt" style="margin-bottom: 1px; margin-top: 10px; font-weight: normal; font-size: 0.8em; color: rgba(0, 0, 0, 0.5);"></p>
                 </div>
                 <div class="modal-footer" id="writebtn">
                     <button type='button' class='btn btn-secondary' data-dismiss='modal'>Fechar</button>
