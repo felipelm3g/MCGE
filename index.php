@@ -126,7 +126,7 @@ if (isset($_SESSION['user'])) {
             <img class="mb-4" src="https://i.imgur.com/NLGDy4j.png" alt="" width="190" height="190">
             <h1 class="h3 mb-3 font-weight-normal" style="cursor: default;">Acesso</h1>
             <label for="inputEmail" class="sr-only">Endereço de email</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="CPF" autocomplete="off" required="" autofocus="" style="text-align: center;">
+            <input type="number" id="inputEmail" class="form-control" placeholder="CPF" autocomplete="off" required="" autofocus="" style="text-align: center;">
             <label for="inputPassword" class="sr-only">Senha</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Senha" autocomplete="off" required="" style="text-align: center;">
             <div class="checkbox mb-3">
