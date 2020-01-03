@@ -69,6 +69,9 @@ if (!isset($_SESSION['user'])) {
                 var diaprocesso = dataprocesso.getDate();
                 var mesprocesso = dataprocesso.getMonth();
                 var anoprocesso = dataprocesso.getFullYear();
+                
+                var mescalendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                document.getElementById("calendartitlemes").innerHTML = mescalendar[mesprocesso] + " - " + anoprocesso;
 
                 //console.log(dataprocesso);
 
@@ -186,10 +189,10 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                <button onclick="RetrocederMes();" type="button" class="btn btn-ligth"><</button>
-                <button type="button" class="btn btn-ligth" disabled="">Janeiro</button>
-                <button onclick="AvancarMes();" type="button" class="btn btn-ligth">></button>
+            <div class="btn-group" style="width: 100%; margin-bottom: 10px;" role="group" aria-label="Basic example">
+                <button style="width: 50px;" onclick="RetrocederMes();" type="button" class="btn btn-ligth"><ion-icon name="arrow-dropleft"></ion-icon></button>
+                <button style="width: calc(100% - 100px);" type="button" class="btn btn-ligth" disabled=""><b id="calendartitlemes"></b></button>
+                <button style="width: 50px;" onclick="AvancarMes();" type="button" class="btn btn-ligth"><ion-icon name="arrow-dropright"></ion-icon></button>
             </div>
             <table style="width:100%">
                 <thead style="width:100%">
