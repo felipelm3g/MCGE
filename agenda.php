@@ -103,14 +103,14 @@ if (!isset($_SESSION['user'])) {
                             if (diaatual == dayshow && mesatual == mesprocesso && anoatual == anoprocesso) {
                                 datavalid = ajustarData(anoatual, mesprocesso, dayshow);
                                 if (eventos.indexOf(datavalid) > -1) {
-                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-primary'>" + dayshow + "</button></td>";
+                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-primary'>" + dayshow + "</button></td>";
                                 } else {
                                     html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-primary' disabled>" + dayshow + "</button></td>";
                                 }
                             } else {
                                 datavalid = ajustarData(anoatual, mesprocesso, dayshow);
                                 if (eventos.indexOf(datavalid) > -1) {
-                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-secondary'>" + dayshow + "</button></td>";
+                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-secondary'>" + dayshow + "</button></td>";
                                 } else {
                                     html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-secondary' disabled>" + dayshow + "</button></td>";
                                 }
