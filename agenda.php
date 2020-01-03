@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="img/MCGDE.png" />
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -40,6 +40,12 @@ if (!isset($_SESSION['user'])) {
 
         </style>
         <script>
+
+            var data = new Date();
+            var diacalendar = data.getDate();
+            var mescalendar = data.getMonth() + 1;
+            var anocalendar = data.getFullYear();
+
             function Logout() {
                 document.getElementById("exampleModalLabel").innerHTML = "Tem certeza?";
                 document.getElementById("texto").innerHTML = "Depois de deslogar não será mais possível acessar o sistema, a menos que se logue novamente.";
@@ -47,22 +53,41 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
-            
-            function MontarCalendario(){
-                
+
+            function MontarCalendario(dia, mes, ano) {
+                console.log(dia + "-" + mes + "-" + ano);
             }
-            function AvancarMes(){
+            function AvancarMes() {
                 console.log("Avançando mês...");
+                mescalendar = mescalendar + 1;
+                if (mescalendar == 13) {
+                    mescalendar = 1;
+                    anocalendar = anocalendar + 1;
+                }
+                MontarCalendario(diacalendar, mescalendar, anocalendar);
             }
-            function RetrocederMes(){
+            function RetrocederMes() {
                 console.log("Voltando mês...");
+                mescalendar = mescalendar - 1;
+                if (mescalendar == 0) {
+                    mescalendar = 12;
+                    anocalendar = anocalendar - 1;
+                }
+                MontarCalendario(diacalendar, mescalendar, anocalendar);
+            }
+            function AbrirDia() {
+                console.log("Abrindo dia");
+            }
+
+            window.onload = function (e) {
+                MontarCalendario(diacalendar, mescalendar, anocalendar);
             }
         </script>
     </head>
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];         ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];             ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -97,6 +122,11 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <button onclick="RetrocederMes();" type="button" class="btn btn-ligth"><</button>
+                <button type="button" class="btn btn-ligth" disabled="">Janeiro</button>
+                <button onclick="AvancarMes();" type="button" class="btn btn-ligth">></button>
+            </div>
             <table style="width:100%">
                 <thead style="width:100%">
                     <tr style="width:100%">
@@ -111,16 +141,59 @@ if (!isset($_SESSION['user'])) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">1</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">2</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-primary">3</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">4</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">5</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">6</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">7</button></td>
+                    </tr>
+                    <tr>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">8</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">9</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">10</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">11</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">12</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">13</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">14</button></td>
+                    </tr>
+                    <tr>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">15</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">16</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">17</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">18</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">19</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">20</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">21</button></td>
+                    </tr>
+                    <tr>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">22</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">23</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">24</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">25</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">26</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">27</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">28</button></td>
+                    </tr
+                    <tr>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">29</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">30</button></td>
+                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">31</button></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
+            <hr>
+            <div class="alert alert-secondary" role="alert">
+                Evento 1.
+            </div>
+            <div class="alert alert-secondary" role="alert">
+                Evento 2.
+            </div>
         </main>
 
         <!-- Modal -->
