@@ -69,6 +69,8 @@ INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
 VALUES ('Evento 5', 'O evento 5 foi criado exclusivamente para teste','2020-01-16');
 INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
 VALUES ('Evento 6', 'O evento 6 foi criado exclusivamente para teste','2020-02-08');
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 7', 'O evento 7 foi criado exclusivamente para teste','2020-01-03');
 
 SELECT * FROM T_EVENTOS;
 
