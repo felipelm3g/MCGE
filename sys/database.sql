@@ -57,13 +57,20 @@ CREATE TABLE IF NOT EXISTS T_EVENTOS (
     PRIMARY KEY (EVENT_ID)
 );
 
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 1', 'O evento 1 foi criado exclusivamente para teste','2020-01-05');
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 2', 'O evento 2 foi criado exclusivamente para teste','2020-01-06');
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 3', 'O evento 3 foi criado exclusivamente para teste','2020-01-13');
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 4', 'O evento 4 foi criado exclusivamente para teste','2020-01-13');
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 5', 'O evento 5 foi criado exclusivamente para teste','2020-01-16');
+INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_DATA)
+VALUES ('Evento 6', 'O evento 6 foi criado exclusivamente para teste','2020-02-08');
 
-INSERT INTO T_POST (POST_NOME, POST_LAT, POST_LONG)
-VALUES ('Posto Shell', '-3.7882544','-38.4996603');
-INSERT INTO T_POST (POST_NOME, POST_LAT, POST_LONG)
-VALUES ('Posto Petrobras', '-3.7882029','-38.501291');
-INSERT INTO T_POST (POST_NOME, POST_LAT, POST_LONG)
-VALUES ('Posto Petrobras', '-3.7875064','-38.5040343');
+SELECT * FROM T_EVENTOS;
 
 /* Tabela dos Posto serviço */
 CREATE TABLE IF NOT EXISTS T_POST_SERV (

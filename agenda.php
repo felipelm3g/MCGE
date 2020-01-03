@@ -38,8 +38,15 @@ if (!isset($_SESSION['user'])) {
 
             }
 
+            .detailevents {
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+            }
+
         </style>
         <script>
+            var eventos = "";
 
             var data = new Date();
             var diacalendar = data.getDate();
@@ -69,7 +76,7 @@ if (!isset($_SESSION['user'])) {
                 var diaprocesso = dataprocesso.getDate();
                 var mesprocesso = dataprocesso.getMonth();
                 var anoprocesso = dataprocesso.getFullYear();
-                
+
                 var mescalendar = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
                 document.getElementById("calendartitlemes").innerHTML = mescalendar[mesprocesso] + " - " + anoprocesso;
 
@@ -92,10 +99,21 @@ if (!isset($_SESSION['user'])) {
                         if (dayshow > totaldiasm) {
                             html += "<td></td>";
                         } else {
+                            var datavalid = "";
                             if (diaatual == dayshow && mesatual == mesprocesso && anoatual == anoprocesso) {
-                                html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-primary'>" + dayshow + "</button></td>";
+                                datavalid = ajustarData(anoatual, mesprocesso, dayshow);
+                                if (eventos.indexOf(datavalid) > -1) {
+                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-primary'>" + dayshow + "</button></td>";
+                                } else {
+                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-primary' disabled>" + dayshow + "</button></td>";
+                                }
                             } else {
-                                html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-secondary'>" + dayshow + "</button></td>";
+                                datavalid = ajustarData(anoatual, mesprocesso, dayshow);
+                                if (eventos.indexOf(datavalid) > -1) {
+                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-secondary'>" + dayshow + "</button></td>";
+                                } else {
+                                    html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-secondary' disabled>" + dayshow + "</button></td>";
+                                }
                             }
                         }
                     } else {
@@ -133,7 +151,46 @@ if (!isset($_SESSION['user'])) {
 
             function AbrirDia(dia, mes, ano) {
                 var dt = new Date(ano, mes, dia);
-                console.log(dt);
+                var dd = dia;
+                var mm = mes + 1;
+                if (dd < 9) {
+                    dd = "0" + parseInt(dd);
+                }
+                if (mm < 9) {
+                    mm = "0" + parseInt(mm);
+                }
+
+                var info = {
+                    'data': ano + "-" + mm + "-" + dd,
+                };
+
+                var ajax2 = $.ajax({
+                    url: "sys/form/form_evento.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando informaçoes...");
+                    }
+                })
+                        .done(function (data) {
+                            var html2 = "";
+                            for (i = 0; i < data.length; i++) {
+                                var dddd = data[i]['EVENT_DATA'].split("-");
+                                
+                                html2 += "<div class='alert alert-secondary' role='alert'>";
+                                html2 += "<h6 class='alert-heading'>" + data[i]['EVENT_TTLO'] + " - " + dddd[2] + "/" + dddd[1] + "/" + dddd[0] + "</h6>";
+                                html2 += "<hr>";
+                                html2 += "<p style='font-size: 0.8em;'>" + data[i]['EVENT_DESC'] + "</p>";
+                                html2 += "</div>";
+                            }
+                            document.getElementById("detailevents").innerHTML = html2;
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
             }
 
             function diasNoMes(mes, ano) {
@@ -146,15 +203,45 @@ if (!isset($_SESSION['user'])) {
                 return dt.getDay();
             }
 
+            function ajustarData(ano, mes, dia) {
+                var mm = mes + 1;
+                var dd = dia;
+                if (dd < 9) {
+                    dd = "0" + parseInt(dd);
+                }
+                if (mm < 9) {
+                    mm = "0" + parseInt(mm);
+                }
+                var retur = ano + "-" + mm + "-" + dd;
+                return retur;
+            }
+
             window.onload = function (e) {
-                MontarCalendario(diacalendar, mescalendar, anocalendar);
+                var ajax1 = $.ajax({
+                    url: "sys/form/form_eventos.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Recuperando todos os eventos...");
+                    }
+                })
+                        .done(function (data) {
+                            eventos = data;
+                            MontarCalendario(diacalendar, mescalendar, anocalendar);
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
+
             }
         </script>
     </head>
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                            ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                                          ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -210,11 +297,7 @@ if (!isset($_SESSION['user'])) {
                 </tbody>
             </table>
             <hr>
-            <div class="alert alert-secondary" role="alert">
-                Evento 1.
-            </div>
-            <div class="alert alert-secondary" role="alert">
-                Evento 2.
+            <div class="detailevents" id="detailevents">
             </div>
         </main>
 
