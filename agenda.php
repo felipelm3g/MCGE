@@ -43,7 +43,7 @@ if (!isset($_SESSION['user'])) {
 
             var data = new Date();
             var diacalendar = data.getDate();
-            var mescalendar = data.getMonth() + 1;
+            var mescalendar = data.getMonth();
             var anocalendar = data.getFullYear();
 
             function Logout() {
@@ -55,28 +55,92 @@ if (!isset($_SESSION['user'])) {
             }
 
             function MontarCalendario(dia, mes, ano) {
-                console.log(dia + "-" + mes + "-" + ano);
+
+                var html = "";
+
+                var dataatual = new Date();
+                var diaatual = dataatual.getDate();
+                var mesatual = dataatual.getMonth();
+                var anoatual = dataatual.getFullYear();
+
+                //console.log(dataatual);
+
+                var dataprocesso = new Date(ano, mes, dia);
+                var diaprocesso = dataprocesso.getDate();
+                var mesprocesso = dataprocesso.getMonth();
+                var anoprocesso = dataprocesso.getFullYear();
+
+                //console.log(dataprocesso);
+
+                var totaldiasm = diasNoMes(mesprocesso, anoprocesso);
+                var diasemana = diaDaSemana(mesprocesso, anoprocesso);
+
+                //console.log(totaldiasm);
+                //console.log(diasemana);
+
+                var dayshow = 0;
+                for (i = 0; i < 36; i++) {
+                    if (i == 0 || i == 7 || i == 14 || i == 21 || i == 28) {
+                        html += "<tr>";
+                    }
+
+                    if (i > diasemana) {
+                        dayshow++;
+                        if (dayshow > totaldiasm) {
+                            html += "<td></td>";
+                        } else {
+                            if (diaatual == dayshow && mesatual == mesprocesso && anoatual == anoprocesso) {
+                                html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-primary'>" + dayshow + "</button></td>";
+                            } else {
+                                html += "<td><button style='width: 44px;' onclick='AbrirDia(" + dayshow + "," + mesprocesso + "," + anoprocesso + ");' type='button' class='btn btn-outline-secondary'>" + dayshow + "</button></td>";
+                            }
+                        }
+                    } else {
+                        html += "<td></td>";
+                    }
+
+
+                    if (i == 6 || i == 13 || i == 20 || i == 27 || i == 34) {
+                        html += "</tr>";
+                    }
+                }
+
+                document.getElementById("calendardays").innerHTML = html;
             }
+
             function AvancarMes() {
                 console.log("Avançando mês...");
                 mescalendar = mescalendar + 1;
-                if (mescalendar == 13) {
-                    mescalendar = 1;
+                if (mescalendar >= 12) {
+                    mescalendar = 0;
                     anocalendar = anocalendar + 1;
                 }
                 MontarCalendario(diacalendar, mescalendar, anocalendar);
             }
+
             function RetrocederMes() {
                 console.log("Voltando mês...");
                 mescalendar = mescalendar - 1;
-                if (mescalendar == 0) {
-                    mescalendar = 12;
+                if (mescalendar < 0) {
+                    mescalendar = 11;
                     anocalendar = anocalendar - 1;
                 }
                 MontarCalendario(diacalendar, mescalendar, anocalendar);
             }
-            function AbrirDia() {
-                console.log("Abrindo dia");
+
+            function AbrirDia(dia, mes, ano) {
+                var dt = new Date(ano, mes, dia);
+                console.log(dt);
+            }
+
+            function diasNoMes(mes, ano) {
+                var dt = new Date(ano, mes + 1, 0);
+                return dt.getDate();
+            }
+
+            function diaDaSemana(mes, ano) {
+                var dt = new Date(ano, mes, 0);
+                return dt.getDay();
             }
 
             window.onload = function (e) {
@@ -87,7 +151,7 @@ if (!isset($_SESSION['user'])) {
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];             ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];                            ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -139,52 +203,7 @@ if (!isset($_SESSION['user'])) {
                         <th>Sab</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">1</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">2</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-primary">3</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">4</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">5</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">6</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">7</button></td>
-                    </tr>
-                    <tr>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">8</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">9</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">10</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">11</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">12</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">13</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">14</button></td>
-                    </tr>
-                    <tr>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">15</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">16</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">17</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">18</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">19</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">20</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">21</button></td>
-                    </tr>
-                    <tr>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">22</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">23</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">24</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">25</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">26</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">27</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">28</button></td>
-                    </tr
-                    <tr>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">29</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">30</button></td>
-                        <td><button style="width: 44px;" onclick="AbrirDia();" type="button" class="btn btn-outline-secondary">31</button></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="calendardays">
                 </tbody>
             </table>
             <hr>
