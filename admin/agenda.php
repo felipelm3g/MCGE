@@ -71,13 +71,81 @@ if (!isset($_SESSION['user'])) {
 
             function criar() {
                 document.getElementById("regModalLabel").innerHTML = "Criar evento";
+                document.getElementById("inputTitulo").value = "";
+                document.getElementById("TextareaDesc").value = "";
+                document.getElementById("inputLat").value = "";
+                document.getElementById("inputLog").value = "";
+                document.getElementById("inputData").value = "";
                 document.getElementById("writebtnreg").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>";
                 document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(\"C\");' class='btn btn-primary'>Salvar</button>";
                 $('#regModal').modal();
             }
-             function salvar(id){
-                 console.log(id);
-             }
+            function exibir(id) {
+
+                document.getElementById("inputTitulo").value = "";
+                document.getElementById("TextareaDesc").value = "";
+                document.getElementById("inputLat").value = "";
+                document.getElementById("inputLog").value = "";
+                document.getElementById("inputData").value = "";
+
+                var info = {
+                    'id': id,
+                };
+
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_get_evento.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Recuperando informações de evento...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log("Informações recuperadas com sucesso...");
+                            document.getElementById("regModalLabel").innerHTML = "Editar evento";
+                            document.getElementById("inputTitulo").value = data[0]['EVENT_TTLO'];
+                            document.getElementById("TextareaDesc").value = data[0]['EVENT_DESC'];
+                            document.getElementById("inputLat").value = data[0]['EVENT_LAT'];
+                            document.getElementById("inputLog").value = data[0]['EVENT_LNG'];
+                            document.getElementById("inputData").value = data[0]['EVENT_DATA'];
+                            document.getElementById("writebtnreg").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>";
+                            document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(" + data[0]['EVENT_ID'] + ");' class='btn btn-primary'>Salvar</button>";
+                            $('#regModal').modal();
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.error(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
+            }
+            function salvar(id) {
+
+                var ttlo = document.getElementById("inputTitulo").value;
+                var desc = document.getElementById("TextareaDesc").value;
+                var lat = document.getElementById("inputLat").value;
+                var lng = document.getElementById("inputLog").value;
+                var dat = document.getElementById("inputData").value;
+
+                if (ttlo == "") {
+                    console.log("Titulo é obrigatorio.");
+                    alert("Titulo é obrigatorio.");
+                    return;
+                }
+                if (desc == "") {
+                    console.log("Descrição é obrigatorio.");
+                    alert("Descrição é obrigatorio.");
+                    return;
+                }
+                if (dat == "") {
+                    console.log("Data é obrigatoria.");
+                    alert("Data é obrigatoria.");
+                    return;
+                }
+                
+                console.log(id);
+            }
+            
             window.onload = function (e) {
 
             }
@@ -103,9 +171,9 @@ if (!isset($_SESSION['user'])) {
                     $data = explode("-", $linha['EVENT_DATA']);
                     $dthj = date("Y-m-d");
                     if (strtotime($linha['EVENT_DATA']) >= strtotime($dthj)) {
-                        echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>";
+                        echo "<div onclick='exibir(" . intval($linha['EVENT_ID']) . ");' class='alert alert-primary alert-dismissible fade show' role='alert'>";
                     } else {
-                        echo "<div class='alert alert-secondary alert-dismissible fade show' role='alert'>";
+                        echo "<div onclick='exibir(" . intval($linha['EVENT_ID']) . ");' class='alert alert-secondary alert-dismissible fade show' role='alert'>";
                     }
                     echo "<strong>" . $linha['EVENT_TTLO'] . "</strong> - <font style='font-size: 0.8em;'>" . $data[2] . "/" . $data[1] . "/" . $data[0] . "</font><br>";
                     echo $linha['EVENT_DESC'];
@@ -155,22 +223,22 @@ if (!isset($_SESSION['user'])) {
                         <form>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPosto" placeholder="Título" required>
+                                    <input type="text" class="form-control" id="inputTitulo" placeholder="Título" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="validationTextarea" placeholder="Descrição" required></textarea>
+                                    <textarea class="form-control" id="TextareaDesc" placeholder="Descrição" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
                                     <div class="row">
                                         <div class="col">
-                                            <input type="number" class="form-control" placeholder="Latitude">
+                                            <input type="number" id="inputLat" class="form-control" placeholder="Latitude">
                                         </div>
                                         <div class="col">
-                                            <input type="text" class="form-control" placeholder="Longitude">
+                                            <input type="text" id="inputLog" class="form-control" placeholder="Longitude">
                                         </div>
                                     </div>
                                 </div>
