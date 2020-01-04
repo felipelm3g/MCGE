@@ -152,15 +152,30 @@ if (!isset($_SESSION['user'])) {
                     <div class="modal-body">
                         <form>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Posto</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPosto" placeholder="Nome Posto" readonly>
+                                    <input type="text" class="form-control" id="inputPosto" placeholder="Título" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Combs.</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputCombs" placeholder="Combustivel" readonly>
+                                    <textarea class="form-control" id="validationTextarea" placeholder="Descrição" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="number" class="form-control" placeholder="Latitude">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Longitude">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="inputData" placeholder="Data" required>
                                 </div>
                             </div>
                         </form>
