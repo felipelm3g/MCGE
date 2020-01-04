@@ -40,6 +40,42 @@ if (!isset($_SESSION['user'])) {
                 $('#exampleModal').modal();
             }
 
+            function excluir(id) {
+
+                var info = {
+                    'id': id,
+                };
+
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_del_evento.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Deletando evento...");
+                    }
+                })
+                        .done(function (data) {
+                            if (data == 1) {
+                                console.log("Evento deletado.");
+                            } else {
+                                console.log("Erro ao tentar deletar evento.");
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.error(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
+            }
+
+            function criar() {
+                document.getElementById("regModalLabel").innerHTML = "Criar evento";
+                document.getElementById("writebtnreg").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>";
+                document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='' class='btn btn-primary'>Salvar</button>";
+                $('#regModal').modal();
+            }
+
             window.onload = function (e) {
 
             }
@@ -54,7 +90,7 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            <button style="margin-bottom: 15px;" type="button" class="btn btn-secondary btn-lg btn-block"><ion-icon name="add"></ion-icon> Adicionar</button>
+            <button onclick="criar();" style="margin-bottom: 15px;" type="button" class="btn btn-secondary btn-lg btn-block"><ion-icon name="add"></ion-icon> Adicionar</button>
             <?php
             //Cria conexão com banco de dados
             $conexao = Database::conexao();
@@ -71,7 +107,7 @@ if (!isset($_SESSION['user'])) {
                     }
                     echo "<strong>" . $linha['EVENT_TTLO'] . "</strong> - <font style='font-size: 0.8em;'>" . $data[2] . "/" . $data[1] . "/" . $data[0] . "</font><br>";
                     echo $linha['EVENT_DESC'];
-                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick=''>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick='excluir(" . $linha['EVENT_ID'] . ");'>";
                     echo "<span aria-hidden='true'><ion-icon name='trash'></ion-icon></span>";
                     echo "</button>";
                     echo "</div>";
@@ -125,24 +161,6 @@ if (!isset($_SESSION['user'])) {
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Combs.</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="inputCombs" placeholder="Combustivel" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Litro</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="inputLitro" placeholder="Litros" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Vlr R$</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="inputVlr" placeholder="Valor Pago" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Data</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="inputData" placeholder="Data" readonly>
                                 </div>
                             </div>
                         </form>
