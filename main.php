@@ -4,6 +4,9 @@ if (!isset($_SESSION['user'])) {
     session_destroy();
     header('Location: index.php');
     exit;
+} else {
+    require_once 'sys/class/Database.php';
+    date_default_timezone_set('America/Fortaleza');
 }
 ?>
 <!doctype html>
@@ -46,16 +49,16 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
-            function OpenMapa(lat,log){
+            function OpenMapa(lat, log) {
                 var linkmap = "https://www.google.com/maps/search/?api=1&query=" + lat + "," + log;
-                window.open(linkmap,"_blank");
+                window.open(linkmap, "_blank");
             }
         </script>
     </head>
     <body>
         <header style="float: left;width: 100%;position: relative;">
             <!--            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];          ?></a>
+                            <a class="navbar-brand" onclick="OpenMenu();"><button style="font-size: 1.2em;" type="button" class="btn btn-outline-secondary btn-sm"><ion-icon style="float: left;" name="menu"></ion-icon></button> &nbsp;<?php // echo $_SESSION['user']['USER_NOME'];               ?></a>
                             <button style="font-size: 1.0em;" class="btn btn-outline-danger btn-sm" type="button" onclick="Logout();">Logout</button>
                         </nav>-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float: left; width: 100%;">
@@ -90,24 +93,93 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading">Aviso!</h4>
-                <p>Sua mensalidade do mês <strong>Fev/20</strong> está atrasada, por favor entrar em contato com a diretoria.</p>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+            <?php
+            //Cria conexão com banco de dados
+            $conexao = Database::conexao();
 
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading">Evento</h4>
-                <p>24º encontro de motociclistas no shopping Iguatemi.</p>
-                <hr>
-                <button type="button" onclick="OpenMapa('-3.7544661','-38.5393512');" class="btn btn-success btn-sm">Abrir Mapa</button>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            
+            try {
+                $consulta = $conexao->query("SELECT * FROM T_MENSALIDADES WHERE MENS_USER = {$_SESSION['user']['USER_CPF']} AND MENS_STT = 1");
+                while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+
+                    $txt = "";
+                    $data = explode("-", $linha['MENS_DATA']);
+
+                    switch ($data[1]) {
+                        case 1:
+                            $txt = "Jan";
+                            break;
+                        case 2:
+                            $txt = "Fev";
+                            break;
+                        case 3:
+                            $txt = "Mar";
+                            break;
+                        case 4:
+                            $txt = "Abr";
+                            break;
+                        case 5:
+                            $txt = "Mai";
+                            break;
+                        case 6:
+                            $txt = "Jun";
+                            break;
+                        case 7:
+                            $txt = "Jul";
+                            break;
+                        case 8:
+                            $txt = "Ago";
+                            break;
+                        case 9:
+                            $txt = "Set";
+                            break;
+                        case 10:
+                            $txt = "Out";
+                            break;
+                        case 11:
+                            $txt = "Nov";
+                            break;
+                        case 12:
+                            $txt = "Dez";
+                            break;
+                    }
+
+                    $txt = $txt . "/" . $data[0];
+
+                    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>";
+                    echo "<h4 class='alert-heading'>Aviso!</h4>";
+                    echo "<p>Sua mensalidade do mês <strong>" . $txt . "</strong> está atrasada, por favor entrar em contato com a diretoria.</p>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick=''>";
+                    echo "<span aria-hidden='true'>&times;</span>";
+                    echo "</button>";
+                    echo "</div>";
+                }
+            } catch (Exception $exc) {
+                
+            }
+
+            try {
+                $consulta = $conexao->query("SELECT * FROM T_EVENTOS WHERE EVENT_DATA = CURDATE();");
+                while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                    echo "<h4 class='alert-heading'>" . $linha['EVENT_TTLO'] . "</h4>";
+                    echo "<p>" . $linha['EVENT_DESC'] . "</p>";
+                    if ($linha['EVENT_LAT'] != 0 && $linha['EVENT_LNG'] != 0) {
+                        echo "<hr>";
+                        echo "<button type='button' onclick='OpenMapa(" . $linha['EVENT_LAT'] . ", " . $linha['EVENT_LNG'] . ");' class='btn btn-success btn-sm'>Abrir Mapa</button>";
+                    }
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick=''>";
+                    echo "<span aria-hidden='true'>&times;</span>";
+                    echo "</button>";
+                    echo "</div>";
+                }
+            } catch (Exception $exc) {
+                
+            }
+
+            //Desfaz conexão com banco de dados
+            $conexao = null;
+            ?>
+
             <div class="alert alert-primary alert-dismissible fade show" role="alert">
                 <h4 class="alert-heading">Informação</h4>
                 <p>Nosso aplicativo está em fase de teste. Dúvidas ou Bugs, por favor reportar para diretoria.</p>
