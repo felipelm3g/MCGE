@@ -142,10 +142,43 @@ if (!isset($_SESSION['user'])) {
                     alert("Data é obrigatoria.");
                     return;
                 }
-                
-                console.log(id);
+
+                var info = {
+                    'id': id,
+                    'titulo': ttlo,
+                    'descri': desc,
+                    'latitude': lat,
+                    'longitude': lng,
+                    'data': dat,
+                };
+
+                console.log(info);
+
+                var ajax3 = $.ajax({
+                    url: "../sys/form/form_salve_evento.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Salvando informações de evento...");
+                    }
+                })
+                        .done(function (data) {
+                            if (data == 1) {
+                                location.reload();
+                            } else {
+                                alert("Erro ao salvar.");
+                            }
+
+                            $('#regModal').modal('hide');
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.error(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
             }
-            
+
             window.onload = function (e) {
 
             }
