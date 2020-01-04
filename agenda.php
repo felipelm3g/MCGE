@@ -170,10 +170,11 @@ if (!isset($_SESSION['user'])) {
                     data: info,
                     dataType: 'json',
                     beforeSend: function () {
-                        console.log("Buscando informaçoes...");
+                        console.log("Buscando informaçoes individuais de evento...");
                     }
                 })
                         .done(function (data) {
+                            console.log("Eventos do dia " + data[0]['EVENT_DATA'] + " recuperado com sucesso.");
                             var html2 = "";
                             for (i = 0; i < data.length; i++) {
                                 var dddd = data[i]['EVENT_DATA'].split("-");
@@ -226,6 +227,7 @@ if (!isset($_SESSION['user'])) {
                     }
                 })
                         .done(function (data) {
+                            console.log("Eventos recuperados com sucesso.");
                             eventos = data;
                             MontarCalendario(diacalendar, mescalendar, anocalendar);
                             return;
