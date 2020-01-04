@@ -4,6 +4,9 @@ if (!isset($_SESSION['user'])) {
     session_destroy();
     header('Location: ../index.php');
     exit;
+} else {
+    require_once '../sys/class/Database.php';
+    date_default_timezone_set('America/Fortaleza');
 }
 ?>
 <!doctype html>
@@ -27,7 +30,6 @@ if (!isset($_SESSION['user'])) {
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
         <!-- Estilos customizados para esse template -->        
         <style>
-
         </style>
         <script>
             function Logout() {
@@ -39,7 +41,7 @@ if (!isset($_SESSION['user'])) {
             }
 
             window.onload = function (e) {
-                
+
             }
         </script>
     </head>
@@ -52,7 +54,35 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            
+            <button style="margin-bottom: 15px;" type="button" class="btn btn-secondary btn-lg btn-block"><ion-icon name="add"></ion-icon> Adicionar</button>
+            <?php
+            //Cria conexão com banco de dados
+            $conexao = Database::conexao();
+
+            try {
+                $consulta = $conexao->query("SELECT * FROM T_EVENTOS ORDER BY EVENT_DATA DESC");
+                while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                    $data = explode("-", $linha['EVENT_DATA']);
+                    $dthj = date("Y-m-d");
+                    if (strtotime($linha['EVENT_DATA']) >= strtotime($dthj)) {
+                        echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>";
+                    } else {
+                        echo "<div class='alert alert-secondary alert-dismissible fade show' role='alert'>";
+                    }
+                    echo "<strong>" . $linha['EVENT_TTLO'] . "</strong> - <font style='font-size: 0.8em;'>" . $data[2] . "/" . $data[1] . "/" . $data[0] . "</font><br>";
+                    echo $linha['EVENT_DESC'];
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick=''>";
+                    echo "<span aria-hidden='true'><ion-icon name='trash'></ion-icon></span>";
+                    echo "</button>";
+                    echo "</div>";
+                }
+            } catch (Exception $exc) {
+                
+            }
+
+            //Desfaz conexão com banco de dados
+            $conexao = null;
+            ?>
         </main>
 
         <!-- Modal -->
