@@ -72,10 +72,12 @@ if (!isset($_SESSION['user'])) {
             function criar() {
                 document.getElementById("regModalLabel").innerHTML = "Criar evento";
                 document.getElementById("writebtnreg").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>";
-                document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='' class='btn btn-primary'>Salvar</button>";
+                document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(\"C\");' class='btn btn-primary'>Salvar</button>";
                 $('#regModal').modal();
             }
-
+             function salvar(id){
+                 console.log(id);
+             }
             window.onload = function (e) {
 
             }
