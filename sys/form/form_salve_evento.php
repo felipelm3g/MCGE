@@ -18,26 +18,25 @@ try {
     if ($id == "C") {
         $stmt = $conexao->prepare('INSERT INTO T_EVENTOS (EVENT_TTLO, EVENT_DESC, EVENT_LAT, EVENT_LNG, EVENT_DATA) VALUES(:titulo, :descri, :latitude, :longitude, :data)');
         $stmt->execute(array(
-            ':titulo' => $titulo,
-            ':descri' => $descri,
-            ':latitude' => $latitude,
-            ':longitude' => $longitude,
+            ':titulo' => "{$titulo}",
+            ':descri' => "{$descri}",
+            ':latitude' => "{$latitude}",
+            ':longitude' => "{$longitude}",
             ':data' => $data
         ));
     } else {
-        $stmt = $conexao->prepare('UPDATE T_EVENTOS SET EVENT_TTLO = :titulo, EVENT_DESC = :descri, EVENT_LAT = :latitude, EVENT_LNG = :longitude, EVENT_DATA = :data WHERE EVENT_ID = :id');
+        $stmt = $conexao->prepare('UPDATE T_EVENTOS SET EVENT_TTLO=:titulo, EVENT_DESC=:descri, EVENT_LAT=:latitude, EVENT_LNG=:longitude, EVENT_DATA=:data WHERE EVENT_ID=:id ;');
         $stmt->execute(array(
-            ':id' => $id,
-            ':titulo' => $titulo,
-            ':descri' => $descri,
-            ':latitude' => $latitude,
-            ':longitude' => $longitude,
+            ':id' => intval($id),
+            ':titulo' => "{$titulo}",
+            ':descri' => "{$descri}",
+            ':latitude' => "{$latitude}",
+            ':longitude' => "{$longitude}",
             ':data' => $data
         ));
     }
 
     $return = $stmt->rowCount();
-    
 } catch (PDOException $e) {
     $return = $e->getMessage();
 }

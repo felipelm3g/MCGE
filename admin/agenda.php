@@ -152,9 +152,7 @@ if (!isset($_SESSION['user'])) {
                     'data': dat,
                 };
 
-                console.log(info);
-
-                var ajax3 = $.ajax({
+                var ajax1 = $.ajax({
                     url: "../sys/form/form_salve_evento.php",
                     type: 'POST',
                     data: info,
@@ -210,7 +208,7 @@ if (!isset($_SESSION['user'])) {
                     }
                     echo "<strong>" . $linha['EVENT_TTLO'] . "</strong> - <font style='font-size: 0.8em;'>" . $data[2] . "/" . $data[1] . "/" . $data[0] . "</font><br>";
                     echo $linha['EVENT_DESC'];
-                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick='excluir(" . $linha['EVENT_ID'] . ");'>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick='excluir(" . intval($linha['EVENT_ID']) . ");'>";
                     echo "<span aria-hidden='true'><ion-icon name='trash'></ion-icon></span>";
                     echo "</button>";
                     echo "</div>";
