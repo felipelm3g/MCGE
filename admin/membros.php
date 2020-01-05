@@ -89,11 +89,11 @@ if (!isset($_SESSION['user'])) {
                     }
                     echo "<a class='dropdown-item' href='#'><ion-icon name='sync'></ion-icon> Resetar Senha</a>";
                     switch (intval($linha['USER_STT'])) {
-                        case 0:
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='lock'></ion-icon> Bloquear Usuario</a>";
-                            break;
                         case 1:
                             echo "<a class='dropdown-item' href='#'><ion-icon name='unlock'></ion-icon> Desbloquear Usuario</a>";
+                            break;
+                        default :
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='lock'></ion-icon> Bloquear Usuario</a>";
                             break;
                     }
                     echo "</div>";
