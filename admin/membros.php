@@ -41,13 +41,145 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"../sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
             }
-
-            function options(id) {
+            
+            function editar(id) {
                 console.log(id);
             }
-
+            
+            function resetar(id) {
+                var info = {
+                    'id': id,
+                    'act': 'RP',
+                };
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_action_membro.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Resetando senha do membro...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                location.reload();
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
+            }
+            
+            function promover(id) {  
+                var info = {
+                    'id': id,
+                    'act': 'P',
+                };
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_action_membro.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Promovendo membro...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                location.reload();
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
+            }
+            function rebaixar(id) {
+                var info = {
+                    'id': id,
+                    'act': 'R',
+                };
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_action_membro.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Rebaixando membro...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                location.reload();
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
+            }
+            function bloquear(id) {
+                var info = {
+                    'id': id,
+                    'act': 'B',
+                };
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_action_membro.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Bloqueando membro...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                location.reload();
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
+            }
+            function desbloquear(id) {
+                var info = {
+                    'id': id,
+                    'act': 'D',
+                };
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_action_membro.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Desbloqueando membro...");
+                    }
+                })
+                        .done(function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                location.reload();
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.log(jqXHR + " - " + textStatus + " - " + data)
+                            return;
+                        });
+            }
+            
             window.onload = function (e) {
-
+                
             }
         </script>
     </head>
@@ -84,11 +216,14 @@ if (!isset($_SESSION['user'])) {
                             break;
                     }
                     switch (intval($linha['USER_STT'])) {
+                        case 0:
+                            echo "<td><ion-icon name='lock' style='opacity: 0.3;'></ion-icon></td>";
+                            break;
                         case 1:
                             echo "<td><ion-icon name='lock'></ion-icon></td>";
                             break;
-                        default :
-                            echo "<td><ion-icon name='lock' style='opacity: 0.3;'></ion-icon></td>";
+                        case 2:
+                            echo "<td><ion-icon name='sync'></ion-icon></td>";
                             break;
                     }
                     echo "</tr>";
@@ -97,26 +232,26 @@ if (!isset($_SESSION['user'])) {
                     echo "<span aria-hidden='true'><ion-icon name='more'></ion-icon></span>";
                     echo "</button>";
                     echo "<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
-                    echo "<a class='dropdown-item' onclick='options(" . intval($linha['USER_CPF']) . ");' href='#'><ion-icon name='create'></ion-icon> Editar</a>";
+                    echo "<a class='dropdown-item' onclick='editar(" . intval($linha['USER_CPF']) . ");' href='#'><ion-icon name='create'></ion-icon> Editar</a>";
                     switch (intval($linha['USER_TYP'])) {
                         case 0:
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-up'></ion-icon> Promover a membro</a>";
+                            echo "<a onclick='promover(" . intval($linha['USER_CPF']) . ");' class='dropdown-item' href='#'><ion-icon name='trending-up'></ion-icon> Promover a membro</a>";
                             break;
                         case 1:
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-down'></ion-icon> Rebaixar a amigo</a>";
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-up'></ion-icon> Promover a diretoria</a>";
+                            echo "<a onclick='rebaixar(" . intval($linha['USER_CPF']) . ");' class='dropdown-item' href='#'><ion-icon name='trending-down'></ion-icon> Rebaixar a amigo</a>";
+                            echo "<a onclick='promover(" . intval($linha['USER_CPF']) . ");' class='dropdown-item' href='#'><ion-icon name='trending-up'></ion-icon> Promover a diretoria</a>";
                             break;
                         case 2:
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-down'></ion-icon> Rebaixar a membro</a>";
+                            echo "<a onclick='rebaixar(" . intval($linha['USER_CPF']) . ");' class='dropdown-item' href='#'><ion-icon name='trending-down'></ion-icon> Rebaixar a membro</a>";
                             break;
                     }
-                    echo "<a class='dropdown-item' href='#'><ion-icon name='sync'></ion-icon> Resetar Senha</a>";
+                    echo "<a class='dropdown-item' onclick='resetar(" . intval($linha['USER_CPF']) . ");' href='#'><ion-icon name='sync'></ion-icon> Resetar Senha</a>";
                     switch (intval($linha['USER_STT'])) {
-                        case 1:
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='unlock'></ion-icon> Desbloquear Usuario</a>";
+                        case 0:
+                            echo "<a onclick='bloquear(" . intval($linha['USER_CPF']) . ");' class='dropdown-item' href='#'><ion-icon name='lock'></ion-icon> Bloquear Usuario</a>";
                             break;
-                        default :
-                            echo "<a class='dropdown-item' href='#'><ion-icon name='lock'></ion-icon> Bloquear Usuario</a>";
+                        case 1:
+                            echo "<a onclick='desbloquear(" . intval($linha['USER_CPF']) . ");' class='dropdown-item' href='#'><ion-icon name='unlock'></ion-icon> Desbloquear Usuario</a>";
                             break;
                     }
                     echo "</div>";
