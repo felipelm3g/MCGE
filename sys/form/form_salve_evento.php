@@ -25,9 +25,10 @@ try {
             ':data' => $data
         ));
     } else {
-        $stmt = $conexao->prepare('UPDATE T_EVENTOS SET EVENT_TTLO=:titulo, EVENT_DESC=:descri, EVENT_LAT=:latitude, EVENT_LNG=:longitude, EVENT_DATA=:data WHERE EVENT_ID=:id ;');
+        $id = intval($id);
+        $stmt = $conexao->prepare('UPDATE T_EVENTOS SET EVENT_TTLO = :titulo, EVENT_DESC = :descri, EVENT_LAT = :latitude, EVENT_LNG = :longitude, EVENT_DATA = :data WHERE EVENT_ID = :id');
         $stmt->execute(array(
-            ':id' => intval($id),
+            ':id' => $id,
             ':titulo' => "{$titulo}",
             ':descri' => "{$descri}",
             ':latitude' => "{$latitude}",

@@ -32,6 +32,13 @@ if (!isset($_SESSION['user'])) {
         <style>
         </style>
         <script>
+
+            var ttlo = "";
+            var desc = "";
+            var lat = "";
+            var lng = "";
+            var dat = "";
+
             function Logout() {
                 document.getElementById("exampleModalLabel").innerHTML = "Tem certeza?";
                 document.getElementById("texto").innerHTML = "Depois de deslogar não será mais possível acessar o sistema, a menos que se logue novamente.";
@@ -121,11 +128,11 @@ if (!isset($_SESSION['user'])) {
             }
             function salvar(id) {
 
-                var ttlo = document.getElementById("inputTitulo").value;
-                var desc = document.getElementById("TextareaDesc").value;
-                var lat = document.getElementById("inputLat").value;
-                var lng = document.getElementById("inputLog").value;
-                var dat = document.getElementById("inputData").value;
+                ttlo = document.getElementById("inputTitulo").value;
+                desc = document.getElementById("TextareaDesc").value;
+                lat = document.getElementById("inputLat").value;
+                lng = document.getElementById("inputLog").value;
+                dat = document.getElementById("inputData").value;
 
                 if (ttlo == "") {
                     console.log("Titulo é obrigatorio.");
@@ -164,11 +171,11 @@ if (!isset($_SESSION['user'])) {
                         .done(function (data) {
                             if (data == 1) {
                                 location.reload();
+                                $('#regModal').modal('hide');
                             } else {
-                                alert("Erro ao salvar.");
+//                                alert("Erro no banco de dados.");
+                                console.log("Erro no banco de dados.");
                             }
-
-                            $('#regModal').modal('hide');
                             return;
                         })
                         .fail(function (jqXHR, textStatus, data) {

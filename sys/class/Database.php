@@ -30,7 +30,7 @@ class Database {
 
         try {
             # Atribui o objeto PDO à variável $db.
-            self::$db = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuario, $db_senha);
+            self::$db = new PDO("$db_driver:host=$db_host; dbname=$db_nome", $db_usuario, $db_senha, array(PDO::MYSQL_ATTR_FOUND_ROWS => true));
             # Garante que o PDO lance exceções durante erros.
             self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             # Garante que os dados sejam armazenados com codificação UFT-8.
