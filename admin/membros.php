@@ -68,8 +68,31 @@ if (!isset($_SESSION['user'])) {
                 $consulta = $conexao->query("SELECT * FROM T_USER ORDER BY USER_TYP DESC");
                 while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
                     echo "<div class='alert alert-secondary alert-dismissible' role='alert'>";
-                    echo "<strong>" . $linha['USER_NOME'] . "</strong><br>";
-//                            echo $linha['EVENT_DESC'];
+//                    echo "<strong>" . $linha['USER_NOME'] . "</strong><br>";
+                    echo "<table style='width:100%;margin: 0px;padding: 0px;'>";
+                    echo "<tr>";
+                    echo "<th>" . $linha['USER_NOME'] . "</th>";
+                    switch (intval($linha['USER_TYP'])) {
+                        case 0:
+                            echo "<td>Amigo</td>";
+                            break;
+                        case 1:
+                            echo "<td>Membr</td>";
+                            break;
+                        case 2:
+                            echo "<td>Staff</td>";
+                            break;
+                    }
+                    switch (intval($linha['USER_STT'])) {
+                        case 1:
+                            echo "<td><ion-icon name='lock'></ion-icon></td>";
+                            break;
+                        default :
+                            echo "<td><ion-icon name='lock' style='opacity: 0.3;'></ion-icon></td>";
+                            break;
+                    }
+                    echo "</tr>";
+                    echo "</table>";
                     echo "<button type='button' class='close'  aria-label='Close' id='dropdownMenuButton' data-toggle='dropdown'>";
                     echo "<span aria-hidden='true'><ion-icon name='more'></ion-icon></span>";
                     echo "</button>";
