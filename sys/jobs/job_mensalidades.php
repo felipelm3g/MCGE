@@ -2,6 +2,7 @@
 
 require_once '../class/User.php';
 require_once '../class/Database.php';
+date_default_timezone_set('America/Fortaleza');
 
 //Cria conexão com banco de dados
 $conexao = Database::conexao();

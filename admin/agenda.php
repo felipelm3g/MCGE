@@ -94,7 +94,7 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("inputLat").value = "";
                 document.getElementById("inputLog").value = "";
                 document.getElementById("inputData").value = "";
-
+                
                 var info = {
                     'id': id,
                 };
@@ -117,7 +117,7 @@ if (!isset($_SESSION['user'])) {
                             document.getElementById("inputLog").value = data[0]['EVENT_LNG'];
                             document.getElementById("inputData").value = data[0]['EVENT_DATA'];
                             document.getElementById("writebtnreg").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>";
-                            document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(" + data[0]['EVENT_ID'] + ");' class='btn btn-primary'>Salvar</button>";
+                            document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(" + parseInt(data[0]['EVENT_ID']) + ");' class='btn btn-primary'>Salvar</button>";
                             $('#regModal').modal();
                             return;
                         })
@@ -174,6 +174,7 @@ if (!isset($_SESSION['user'])) {
                                 $('#regModal').modal('hide');
                             } else {
 //                                alert("Erro no banco de dados.");
+                                console.log(data);
                                 console.log("Erro no banco de dados.");
                             }
                             return;
