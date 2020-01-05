@@ -27,7 +27,8 @@ if (!isset($_SESSION['user'])) {
         <link rel="shortcut icon" href="../img/MCGDE.png" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         <!-- Estilos customizados para esse template -->        
         <style>
         </style>
@@ -222,7 +223,7 @@ if (!isset($_SESSION['user'])) {
                     echo "</div>";
                 }
             } catch (Exception $exc) {
-                
+                echo "<p>MYSQL - Erro ao selecionar eventos...</p>";
             }
 
             //Desfaz conexão com banco de dados

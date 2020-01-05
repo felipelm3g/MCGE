@@ -4,6 +4,9 @@ if (!isset($_SESSION['user'])) {
     session_destroy();
     header('Location: ../index.php');
     exit;
+} else {
+    require_once '../sys/class/Database.php';
+    date_default_timezone_set('America/Fortaleza');
 }
 ?>
 <!doctype html>
@@ -24,7 +27,8 @@ if (!isset($_SESSION['user'])) {
         <link rel="shortcut icon" href="../img/MCGDE.png" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         <!-- Estilos customizados para esse template -->        
         <style>
 
@@ -38,8 +42,12 @@ if (!isset($_SESSION['user'])) {
                 $('#exampleModal').modal();
             }
 
+            function options(id) {
+                console.log(id);
+            }
+
             window.onload = function (e) {
-                
+
             }
         </script>
     </head>
@@ -52,7 +60,52 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            
+            <?php
+            //Cria conexão com banco de dados
+            $conexao = Database::conexao();
+
+            try {
+                $consulta = $conexao->query("SELECT * FROM T_USER ORDER BY USER_TYP DESC");
+                while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<div class='alert alert-secondary alert-dismissible' role='alert'>";
+                    echo "<strong>" . $linha['USER_NOME'] . "</strong><br>";
+//                            echo $linha['EVENT_DESC'];
+                    echo "<button type='button' class='close'  aria-label='Close' id='dropdownMenuButton' data-toggle='dropdown'>";
+                    echo "<span aria-hidden='true'><ion-icon name='more'></ion-icon></span>";
+                    echo "</button>";
+                    echo "<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
+                    echo "<a class='dropdown-item' onclick='options(" . intval($linha['USER_CPF']) . ");' href='#'><ion-icon name='create'></ion-icon> Editar</a>";
+                    switch (intval($linha['USER_TYP'])) {
+                        case 0:
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-up'></ion-icon> Promover a membro</a>";
+                            break;
+                        case 1:
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-down'></ion-icon> Rebaixar a amigo</a>";
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-up'></ion-icon> Promover a diretoria</a>";
+                            break;
+                        case 2:
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='trending-down'></ion-icon> Rebaixar a membro</a>";
+                            break;
+                    }
+                    echo "<a class='dropdown-item' href='#'><ion-icon name='sync'></ion-icon> Resetar Senha</a>";
+                    switch (intval($linha['USER_STT'])) {
+                        case 0:
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='lock'></ion-icon> Bloquear Usuario</a>";
+                            break;
+                        case 1:
+                            echo "<a class='dropdown-item' href='#'><ion-icon name='unlock'></ion-icon> Desbloquear Usuario</a>";
+                            break;
+                    }
+                    echo "</div>";
+                    echo "</div>";
+                }
+            } catch (Exception $exc) {
+                echo "<p>MYSQL - Erro ao selecionar eventos...</p>";
+            }
+
+            //Desfaz conexão com banco de dados
+            $conexao = null;
+            ?>
         </main>
 
         <!-- Modal -->

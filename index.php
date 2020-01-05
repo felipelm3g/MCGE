@@ -24,6 +24,9 @@ if (isset($_SESSION['user'])) {
 
         <!-- Estilos customizados para esse template -->
         <link href="css/signin.css" rel="stylesheet">
+        
+        <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
