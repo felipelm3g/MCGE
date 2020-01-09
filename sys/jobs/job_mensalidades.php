@@ -24,10 +24,10 @@ while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
     $user = new User($linha['USER_CPF']);
 
     if ($user->gerarFatura('25')) {
-        echo $linha['USER_CPF'] . " - Gerado com sucesso <br>";
+        echo $linha['USER_CPF'] . " - Gerado com sucesso" . "\n" . "<br>";
         $texto = $texto . $linha['USER_CPF'] . ' - Gerado com sucesso.' . " \r\n";
     } else {
-        echo $linha['USER_CPF'] . " - Não foi gerado <br>";
+        echo $linha['USER_CPF'] . " - Não foi gerado <br>" . "\n" . "<br>";
         $texto = $texto . $linha['USER_CPF'] . ' - Não foi gerado.' . " \r\n";
     }
 
