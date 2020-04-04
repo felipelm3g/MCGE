@@ -212,7 +212,7 @@ if (!isset($_SESSION['user'])) {
                             echo "<td>Membr</td>";
                             break;
                         case 2:
-                            echo "<td>Staff</td>";
+                            echo "<td>Diret</td>";
                             break;
                     }
                     switch (intval($linha['USER_STT'])) {
