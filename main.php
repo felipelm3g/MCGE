@@ -180,18 +180,25 @@ if (!isset($_SESSION['user'])) {
             } catch (Exception $exc) {
                 
             }
+            
+            try {
+                $consulta = $conexao->query("SELECT * FROM T_AVISOS;");
+                while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>";
+                    echo "<h4 class='alert-heading'>" . $linha['AVISO_TIT'] . "</h4>";
+                    echo "<p>" . $linha['AVISO_DES'] . "</p>";
+                    echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick=''>";
+                    echo "<span aria-hidden='true'>&times;</span>";
+                    echo "</button>";
+                    echo "</div>";
+                }
+            } catch (Exception $exc) {
+                
+            }
 
             //Desfaz conexão com banco de dados
             $conexao = null;
             ?>
-
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading">Informação</h4>
-                <p>Nosso aplicativo está em fase de teste. Dúvidas ou Bugs, por favor reportar para diretoria.</p>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
         </main>
 
         <!-- Modal -->

@@ -4,6 +4,9 @@ if (!isset($_SESSION['user'])) {
     session_destroy();
     header('Location: ../index.php');
     exit;
+} else {
+    require_once '../sys/class/Database.php';
+    date_default_timezone_set('America/Fortaleza');
 }
 ?>
 <!doctype html>
@@ -28,7 +31,14 @@ if (!isset($_SESSION['user'])) {
         <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         <!-- Estilos customizados para esse template -->        
         <style>
-
+            #lixeira {
+                float: right;
+                position: absolute;
+                margin: 0px;
+                padding: 0px;
+                right: 5px;
+                top: 5px;
+            }
         </style>
         <script>
             function Logout() {
@@ -37,6 +47,36 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtn").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Não</button>";
                 document.getElementById("writebtn").innerHTML += "<button type='button' onclick='window.location.href = \"../sys/form/form_logout.php\";' class='btn btn-primary'>Sim</button>";
                 $('#exampleModal').modal();
+            }
+            
+            function excluir(id) {
+
+                var info = {
+                    'id': id,
+                };
+
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_del_aviso.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Deletando aviso...");
+                    }
+                })
+                        .done(function (data) {
+                            if (data == 1) {
+                                console.log("Evento deletado.");
+                                location.reload();
+                            } else {
+                                alert("Erro ao tentar deletar evento.");
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.error(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
             }
 
             window.onload = function (e) {
@@ -53,7 +93,27 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
-            <p>Página em desenvolvimento... (sem funcionalidades)</p>
+            <?php
+            //Cria conexão com banco de dados
+            $conexao = Database::conexao();
+            
+            $consulta = $conexao->query("SELECT * FROM T_AVISOS;");
+            while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {             
+                echo "<div class='card' style='width: 100%;'>";
+                echo "<button type='button' class='close' data-dismiss='alert' aria-label='Close' onclick='excluir(" . intval($linha['AVISO_ID']) . ");'>";
+                echo "<span id='lixeira' aria-hidden='true'><ion-icon name='trash'></ion-icon></span>";
+                echo "</button>";
+                echo "<div class='card-body'>";
+                echo "<h5 class='card-title'>" . $linha['AVISO_TIT'] . "</h5>";
+                echo "<p class='card-text'>" . $linha['AVISO_DES'] . "</p>";
+                echo "</div>";
+                echo "</div>";
+                echo "<p></p>";
+            }
+                
+            //Desfaz conexão com banco de dados
+            $conexao = null;
+            ?>
         </main>
 
         <!-- Modal -->

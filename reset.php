@@ -108,7 +108,7 @@ if (!isset($_SESSION['user'])) {
                         .done(function (data) {
                             if (data) {
                                 console.log("Senha ajustada com sucesso.");
-                                alert("Senha ajusta. Por favor efetue o login novamente.");
+                                alert("Senha ajustada. Por favor efetue o login novamente.");
                                 window.location.href = "sys/form/form_logout.php";
                                 return;
                             } else {

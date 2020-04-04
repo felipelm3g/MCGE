@@ -74,6 +74,17 @@ VALUES ('Evento 7', 'O evento 7 foi criado exclusivamente para teste','2020-01-0
 
 SELECT * FROM T_EVENTOS;
 
+/* Tabela avisos */
+CREATE TABLE IF NOT EXISTS T_AVISOS (
+	AVISO_ID  BIGINT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, #ID Aviso
+    AVISO_TIT VARCHAR(100) NOT NULL, #Titulo Aviso
+    AVISO_DES VARCHAR(700) NOT NULL, #Descrição Aviso
+    PRIMARY KEY (AVISO_ID)
+);
+
+INSERT INTO T_AVISOS (AVISO_TIT, AVISO_DES)
+VALUES ('Informação','Nosso aplicativo está em fase de teste. Dúvidas ou Bugs, por favor reportar para diretoria.');
+
 /* Tabela dos Posto serviço */
 CREATE TABLE IF NOT EXISTS T_POST_SERV (
 	POST_SERV_PID BIGINT UNSIGNED ZEROFILL NOT NULL, #ID Posto
