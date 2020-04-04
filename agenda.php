@@ -4,6 +4,11 @@ if (!isset($_SESSION['user'])) {
     session_destroy();
     header('Location: index.php');
     exit;
+} else {
+    if ($_SESSION['user']['USER_STT'] == 2) {
+        header('Location: reset.php');
+        exit;
+    }
 }
 ?>
 <!doctype html>

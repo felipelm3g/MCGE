@@ -7,6 +7,10 @@ if (!isset($_SESSION['user'])) {
 } else {
     require_once 'sys/class/Database.php';
     date_default_timezone_set('America/Fortaleza');
+    if ($_SESSION['user']['USER_STT'] == 2) {
+        header('Location: reset.php');
+        exit;
+    }
 }
 ?>
 <!doctype html>

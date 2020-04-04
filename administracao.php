@@ -9,6 +9,10 @@ if (!isset($_SESSION['user'])) {
         header('Location: index.php');
         exit;
     }
+    if ($_SESSION['user']['USER_STT'] == 2) {
+        header('Location: reset.php');
+        exit;
+    }
 }
 ?>
 <!doctype html>
