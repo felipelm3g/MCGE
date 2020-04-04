@@ -1,7 +1,8 @@
 <?php
 session_start();
-if (isset($_SESSION['user'])) {
-    header('Location: main.php');
+if (!isset($_SESSION['user'])) {
+    session_destroy();
+    header('Location: index.php');
     exit;
 } else {
     if ($_SESSION['user']['USER_STT'] != 2) {
@@ -47,7 +48,7 @@ if (isset($_SESSION['user'])) {
 
             window.onkeypress = function (e) {
                 if (e['keyCode'] == 13) {
-                    login();
+                    Ajustarsenha();
                 }
             }
 
@@ -76,10 +77,10 @@ if (isset($_SESSION['user'])) {
                 }
             }
 
-            function login() {
+            function Ajustarsenha() {
                 var info = {
-                    'cpf': document.getElementById('inputEmail').value,
-                    'pass': document.getElementById('inputPassword').value,
+                    'pass1': document.getElementById('inputEmail').value,
+                    'pass2': document.getElementById('inputPassword').value,
                 };
 
                 if (document.getElementById('inputEmail').value == "" ||
@@ -88,35 +89,31 @@ if (isset($_SESSION['user'])) {
                     $('#exampleModal').modal();
                     
                     return;
+                } else {
+                    if (info['pass1'] != info['pass2']) {
+                        document.getElementById("texto").innerHTML = "As senhas estão divergentes.";
+                        $('#exampleModal').modal();
+                        return;
+                    }
                 }
 
                 var ajax1 = $.ajax({
-                    url: "sys/form/form_login.php",
+                    url: "sys/form/form_reset_pass.php",
                     type: 'POST',
                     data: info,
                     beforeSend: function () {
-                        console.log("Validando login...");
+                        console.log("Ajustando senha...");
                     }
                 })
                         .done(function (data) {
-                            if (data == 0 || data == '0') {
-                                console.log("Login validado com sucesso.");
-                                window.location.href = "main.php";
+                            if (data) {
+                                console.log("Senha ajustada com sucesso.");
+                                alert("Senha ajusta. Por favor efetue o login novamente.");
+                                window.location.href = "sys/form/form_logout.php";
                                 return;
                             } else {
-                                switch (parseInt(data)) {
-                                    case 1:
-                                        document.getElementById("texto").innerHTML = "CPF não cadastrado ou inválido.";
-                                        $('#exampleModal').modal();
-                                        console.log("CPF não cadastrado ou inválido.");
-                                        break;
-
-                                    case 2:
-                                        document.getElementById("texto").innerHTML = "Senha inválida.";
-                                        $('#exampleModal').modal();
-                                        console.log("Senha inválida.");
-                                        break;
-                                }
+                                document.getElementById("texto").innerHTML = "Ocorreu um erro ao tentar ajustar sua senha, por favor entrar em contato com a diretoria. Se possível, favor enviar um print dessa tela.";
+                                $('#exampleModal').modal();
                                 return;
                             }
                         })
@@ -132,18 +129,18 @@ if (isset($_SESSION['user'])) {
         <form class="form-signin">
             <!--<img class="mb-4" src="img/MCGE.png" alt="" width="190" height="190">-->
             <img class="mb-4" src="https://i.imgur.com/NLGDy4j.png" alt="" width="190" height="190">
-            <h1 class="h3 mb-3 font-weight-normal" style="cursor: default;">Acesso</h1>
+            <h1 class="h3 mb-3 font-weight-normal" style="cursor: default;">Trocar senha</h1>
             <label for="inputEmail" class="sr-only">Endereço de email</label>
-            <input type="number" id="inputEmail" class="form-control" placeholder="CPF" autocomplete="off" required="" autofocus="" style="text-align: center;">
+            <input type="password" id="inputEmail" class="form-control" placeholder="Nova senha" autocomplete="off" required="" autofocus="" style="text-align: center;">
             <label for="inputPassword" class="sr-only">Senha</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Senha" autocomplete="off" required="" style="text-align: center;">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Confirmar" autocomplete="off" required="" style="text-align: center;">
             <div class="checkbox mb-3">
                 <label>
 <!--                    <input type="checkbox" value="remember-me"> Lembrar de mim-->
-                    <a href="forget.php" style="text-decoration: none;color: rgba(0,0,0,0.7);">Esqueci minha senha</a>
+                    <a href="forget.php" style="text-decoration: none;color: rgba(0,0,0,0.7);"></a>
                 </label>
             </div>
-            <button class="btn btn-lg btn-secondary btn-block" onclick="login();" type="button">Acessar</button>
+            <button class="btn btn-lg btn-secondary btn-block" onclick="Ajustarsenha();" type="button">Salvar</button>
             <p class="mt-5 mb-3 text-muted" style="cursor: default;">© 2019</p>
         </form>
 
