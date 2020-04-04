@@ -78,6 +78,64 @@ if (!isset($_SESSION['user'])) {
                             return;
                         });
             }
+            
+            function criar() {
+                document.getElementById("regModalLabel").innerHTML = "Criar aviso";
+                document.getElementById("inputTitulo").value = "";
+                document.getElementById("TextareaDesc").value = "";
+                document.getElementById("writebtnreg").innerHTML = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>";
+                document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(\"C\");' class='btn btn-primary'>Salvar</button>";
+                $('#regModal').modal();
+            }
+            
+            function salvar() {
+                
+                //vai usado quando tiver a opçao editar
+                id = document.getElementById("inputId").value;
+                ttlo = document.getElementById("inputTitulo").value;
+                desc = document.getElementById("TextareaDesc").value;
+
+                if (ttlo == "") {
+                    console.log("Titulo é obrigatorio.");
+                    alert("Titulo é obrigatorio.");
+                    return;
+                }
+                if (desc == "") {
+                    console.log("Descrição é obrigatorio.");
+                    alert("Descrição é obrigatorio.");
+                    return;
+                }
+
+                var info = {
+                    'titulo': ttlo,
+                    'descri': desc,
+                };
+
+                var ajax1 = $.ajax({
+                    url: "../sys/form/form_salve_aviso.php",
+                    type: 'POST',
+                    data: info,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Salvando informações de aviso...");
+                    }
+                })
+                        .done(function (data) {
+                            if (data == 1) {
+                                $('#regModal').modal('hide');
+                                location.reload();
+                            } else {
+//                                alert("Erro no banco de dados.");
+                                console.log(data);
+                                alert("Erro no banco de dados.");
+                            }
+                            return;
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            console.error(jqXHR + " - " + textStatus + " - " + data);
+                            return;
+                        });
+            }
 
             window.onload = function (e) {
 
@@ -93,6 +151,7 @@ if (!isset($_SESSION['user'])) {
         </header>
 
         <main  style="float: left;width: 100%; padding: 20px;">
+            <button onclick="criar();" style="margin-bottom: 15px;" type="button" class="btn btn-secondary btn-lg btn-block"><ion-icon name="add"></ion-icon> Adicionar</button>
             <?php
             //Cria conexão com banco de dados
             $conexao = Database::conexao();
@@ -146,34 +205,15 @@ if (!isset($_SESSION['user'])) {
                     </div>
                     <div class="modal-body">
                         <form>
+                            <input type="hidden" class="form-control" id="inputId" >
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Posto</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPosto" placeholder="Nome Posto" readonly>
+                                    <input type="text" class="form-control" id="inputTitulo" placeholder="Título" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Combs.</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputCombs" placeholder="Combustivel" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Litro</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="inputLitro" placeholder="Litros" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Vlr R$</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="inputVlr" placeholder="Valor Pago" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Data</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="inputData" placeholder="Data" readonly>
+                                    <textarea class="form-control" id="TextareaDesc" placeholder="Descrição" required></textarea>
                                 </div>
                             </div>
                         </form>
@@ -183,6 +223,7 @@ if (!isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body> 

@@ -88,6 +88,7 @@ if (!isset($_SESSION['user'])) {
                 document.getElementById("writebtnreg").innerHTML += "<button type='button' onclick='salvar(\"C\");' class='btn btn-primary'>Salvar</button>";
                 $('#regModal').modal();
             }
+            
             function exibir(id) {
 
                 document.getElementById("inputTitulo").value = "";
