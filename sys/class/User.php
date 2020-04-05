@@ -53,6 +53,32 @@ class User {
     private function getVencimento() {
         return date("Y-m-d");
     }
+    
+    public function registrar($name, $pass){
+        //Encriptar
+        $this->setNome($name);
+        $this->setPass(base64_encode($pass));
+        
+        //Cria conexão com banco de dados
+        $conexao = Database::conexao();
+        
+        try {
+            $stmt = $conexao->prepare("INSERT INTO T_USER (USER_CPF, USER_NOME, USER_PASS) VALUES(:cpf, :name, :pass)");
+            $stmt->execute(array(
+                ':cpf' => $this->getCpf(),
+                ':name' => $this->getNome(),
+                ':pass' => $this->getPass()
+            ));
+            
+            //Desfaz conexão com banco de dados
+            $conexao = null;
+            return true;
+        } catch (Exception $exc) {
+            //Desfaz conexão com banco de dados
+            $conexao = null;
+            return false;
+        }
+    }
 
     public function gerarFatura($vlr) {
 
