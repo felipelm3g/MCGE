@@ -135,7 +135,7 @@ if (isset($_SESSION['user'])) {
             <div class="checkbox mb-3">
                 <label>
 <!--                    <input type="checkbox" value="remember-me"> Lembrar de mim-->
-                    <a href="forget.php" style="text-decoration: none;color: rgba(0,0,0,0.7);">Esqueci minha senha</a>
+                    <a href="registrar.php" style="text-decoration: none;color: rgba(0,0,0,0.7);">Registrar-se</a>
                 </label>
             </div>
             <button class="btn btn-lg btn-secondary btn-block" onclick="login();" type="button">Acessar</button>
