@@ -206,24 +206,24 @@ if (!isset($_SESSION['user'])) {
                     echo "<th>" . $linha['USER_NOME'] . "</th>";
                     switch (intval($linha['USER_TYP'])) {
                         case 0:
-                            echo "<td>Amigo</td>";
+                            echo "<td width='60px'>Amigo</td>";
                             break;
                         case 1:
-                            echo "<td>Membr</td>";
+                            echo "<td width='60px'>Membr</td>";
                             break;
                         case 2:
-                            echo "<td>Diret</td>";
+                            echo "<td width='60px'>Diret</td>";
                             break;
                     }
                     switch (intval($linha['USER_STT'])) {
                         case 0:
-                            echo "<td><ion-icon name='lock' style='opacity: 0.3;'></ion-icon></td>";
+                            echo "<td width='20px'><ion-icon name='lock' style='opacity: 0.3;'></ion-icon></td>";
                             break;
                         case 1:
-                            echo "<td><ion-icon name='lock'></ion-icon></td>";
+                            echo "<td width='20px'><ion-icon name='lock'></ion-icon></td>";
                             break;
                         case 2:
-                            echo "<td><ion-icon name='sync'></ion-icon></td>";
+                            echo "<td width='20px'><ion-icon name='sync'></ion-icon></td>";
                             break;
                     }
                     echo "</tr>";
