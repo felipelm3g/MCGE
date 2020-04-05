@@ -121,6 +121,7 @@
                                 document.getElementById('InputPassword2').value = "";
                                 document.getElementById("texto").innerHTML = "Parabéns <b>" + name + "</b> você foi cadastrado com sucesso! Logo seu acesso a nossa aplicação será liberado.";
                                 $('#exampleModal').modal();
+                                setTimeout(function(){ window.location.href = "index.php"; }, 1000);
                                 return;
                             } else {
                                 switch (parseInt(data)) {
