@@ -161,7 +161,8 @@ sup {
 }
 
 a {
-  color: #f4623a;
+  /*color: #f4623a;*/
+  color: #000;
   text-decoration: none;
   background-color: transparent;
 }
@@ -2459,8 +2460,10 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #f4623a;
-  border-color: #f4623a;
+  /*background-color: #f4623a;
+  border-color: #f4623a;*/
+  background-color: #000;
+  border-color: #000;
 }
 .btn-primary:hover {
   color: #fff;
@@ -2475,8 +2478,10 @@ fieldset:disabled a.btn {
 }
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
-  background-color: #f4623a;
-  border-color: #f4623a;
+  /*background-color: #f4623a;
+  border-color: #f4623a;*/
+  background-color: #000;
+  border-color: #000;
 }
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
